@@ -1,4 +1,23 @@
-.icon_manmade_fire { display: block; width: 32px !important; height: 32px !important; background: url(../images/icon_manmade_fire.png) no-repeat 50% 50%; background-size: 100% 100%; }
+html,body { padding: 0; margin: 0; }
+*, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+.leaflet-left { left: 200px; }
+.map_filter { position: absolute; top: 0; left: 0; width: 200px; background: #fff; }
+.map_filter h1 { margin: 0; padding: 0; background: #333 url(../images/projectdoom.png) no-repeat 50% 50%; height: 50px; text-indent: -9999px; }
+.map_filter ul { padding: 0; margin: 0; list-style-type: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none; user-select: none; }
+.map_filter li { position: relative; }
+.map_filter li .exp { position: absolute; top: 0; bottom: 0; right: 0; width: 25px; border-left: 1px solid #eee; background: url(../images/exp.png) no-repeat 50% 18px; }
+.map_filter li.expand .exp { background-image: url(../images/exp_col.png); }
+.map_filter li label { display: block; padding: 10px 20px; margin: 0; border-top: 1px solid #eee; }
+.map_filter li li label { background: #f8f8f8; padding-left: 40px; }
+.map_filter li ul { overflow: hidden; max-height: 0; -webkit-transition: all .2s; -moz-transition: all .2s; -o-transition: all .2s; transition: all .2s; }
+.map_filter li.expand ul { max-height: 10000px; }
+
+
+/*.map_filter li li { margin: 0 -20px; }*/
+/*.icon_manmade_fire { display: block; width: 32px !important; height: 32px !important; margin: -16px 0 0 -16px !important; background: url(../images/icon_manmade_fire.png) no-repeat 50% 50%; background-size: 100% 100%; }*/
+.icon_manmade_fire { display: block; width: 32px !important; height: 32px !important; margin: -16px 0 0 -16px !important; }
+.icon_manmade_fire img { width: 100%; }
 [data-zoom="0"] .leaflet-marker-icon,
 [data-zoom="1"] .leaflet-marker-icon,
 [data-zoom="2"] .leaflet-marker-icon,
@@ -6,20 +25,24 @@
 [data-zoom="4"] .leaflet-marker-icon,
 [data-zoom="5"] .leaflet-marker-icon {
 	width: 8px !important; height: 8px !important;
+	margin: -4px 0 0 -4px !important;
 }
 [data-zoom="6"] .leaflet-marker-icon,
 [data-zoom="7"] .leaflet-marker-icon,
 [data-zoom="8"] .leaflet-marker-icon {
 	width: 16px !important; height: 16px !important;
+	margin: -8px 0 0 -8px !important;
 }
 [data-zoom="9"] .leaflet-marker-icon,
 [data-zoom="10"] .leaflet-marker-icon,
 [data-zoom="11"] .leaflet-marker-icon {
 	width: 24px !important; height: 24px !important;
+	margin: -12px 0 0 -12px !important;
 }
 [data-zoom="12"] .leaflet-marker-icon,
 [data-zoom="13"] .leaflet-marker-icon,
 [data-zoom="14"] .leaflet-marker-icon,
 [data-zoom="15"] .leaflet-marker-icon {
 	width: 32px !important; height: 32px !important;
+	margin: -16px 0 0 -16px !important;
 }

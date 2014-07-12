@@ -12,8 +12,6 @@ function init() {
     map.on('zoomend', function() {
         var currentZoom = map.getZoom();
         $('#map').attr('data-zoom', currentZoom);
-        // var currentZoom = map.getZoom();
-        // myicon.setRadius(currentZoom);
     });
 
     //Control that shows state info on hover
@@ -122,13 +120,53 @@ function init() {
     //Add the tiled map layer to the map
     map.addLayer(tiles);
     
-	var customLayer = L.geoJson(null, {
+
+
+
+    var rangeLayer = L.geoJson(null, {
+        onEachFeature: onEachFeature,
+        
+        pointToLayer: function (feature, latlng) {
+            var circle = L.circleMarker(latlng, {
+                radius: 50,
+                fillColor: "#e30202",
+                weight: 0,
+                opacity: 1,
+                fillOpacity: 0.1
+            });
+
+            map.on('zoomend', function() {
+                var currentZoom = map.getZoom();
+                circle.setRadius(currentZoom * 10);
+            });
+            return circle;
+        }
+
+    }); 
+
+    //Load the disasters into a layer
+    var geojsonLayer = omnivore.csv('doom_stats.csv', {
+        latfield: 'lat',
+        lonfield: 'long',
+        delimiter: ','
+    },
+        rangeLayer
+    );
+    
+    map.addLayer(geojsonLayer);
+
+
+
+	var markerLayer = L.geoJson(null, {
 		onEachFeature: onEachFeature,
 		
 		pointToLayer: function (feature, latlng) {
 
             // var myicon = new L.Icon({iconUrl: 'dist/images/fire_circle.png'});
-            var myicon = L.divIcon({className: 'icon_manmade_fire'});
+            var myicon = L.divIcon({
+                className: 'icon_manmade_fire',
+                html: '<img src="images/icon_manmade_fire.png">'
+            });
 
 			return L.marker(latlng, {
 				icon: myicon
@@ -137,12 +175,12 @@ function init() {
 	});	
 	
 	//Load the disasters into a layer
-	geojsonLayer = omnivore.csv('doom_stats.csv', {
+	var geojsonLayer = omnivore.csv('doom_stats.csv', {
 		latfield: 'lat',
 		lonfield: 'long',
 		delimiter: ','
 	},
-		customLayer
+		markerLayer
 	);
 	
 	map.addLayer(geojsonLayer);
@@ -251,8 +289,8 @@ function init() {
 
 function onEachFeature(feature, layer) {
     layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
+        // mouseover: highlightFeature,
+        // mouseout: resetHighlight,
         click: function (e) {
             if (currTarget) {
                 resetHighlight(currTarget); //reset previously clicked postcode
@@ -308,3 +346,28 @@ function resetHighlight(e) {
 	
     info.update();
 }
+
+$(function() {
+    $('#map_filter [level=parent]').change(function() {
+        $('#map_filter [name='+$(this).val()+']').prop('checked', $(this).is(":checked")).change();
+    });
+    $('#map_filter [level=all]').change(function() {
+        $('#map_filter [level=parent]').prop('checked', $(this).is(":checked")).change();
+    });
+    $('#map_filter [level=child]').change(function() {
+        if ($(this).is(":checked")) {
+            console.log('show ' + $(this).val() + ' layer');
+        } else {
+            console.log('hide ' + $(this).val() + ' layer');
+        }
+    });
+    $('#map_filter .exp').click(function() {
+        var parent = $(this).parent();
+        if (parent.hasClass('expand')) {
+            parent.removeClass('expand');
+        } else {
+            $('#map_filter li.expand').removeClass('expand');
+            parent.addClass('expand');
+        }
+    })
+});

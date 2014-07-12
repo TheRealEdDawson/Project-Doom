@@ -11,7 +11,6 @@
 	<script src="dist/leaflet-omnivore.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/style.css" />
 
-    icon_manmade_fire
     <style>
         .info {
             padding: 6px 8px;
@@ -55,5 +54,110 @@
 </head>
 <body onload="init();">
     <div id="map" style="height: 100%"></div>
+    <nav class="map_filter" id="map_filter">
+        <h1 class="logo">Project Doom</h1>
+        <ul>
+            <li>
+                <label>
+                    <input type="checkbox" level="all" name="all" value="all">All
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox" level="parent" name="parent" value="transports">Transports
+                </label>
+                <span class="exp"></span>
+                <ul>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="transports" value="air">Air
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="transports" value="rail">Rail
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="transports" value="road">Road
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="transports" value="water">Water
+                        </label>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox" level="parent" name="parent" value="natural">Natural
+                </label>
+                <span class="exp"></span>
+                <ul>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="natural" value="bushfire">Bushfire
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="natural" value="cyclone">Cyclone
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="natural" value="earthquake">Earthquake
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="natural" value="flood">Flood
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="natural" value="heatwave">Heatwave
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="natural" value="landslide">Landslide
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="natural" value="riptide">Riptide
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="natural" value="storm">Storm/Hail
+                        </label>
+                    </li>
+
+                </ul>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox" level="parent" name="parent" value="manmade">Man Made
+                </label>
+                <span class="exp"></span>
+                <ul>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="manmade" value="fire">Fire
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" level="child" name="manmade" value="industrial">Industrial
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 </body>
 </html>
