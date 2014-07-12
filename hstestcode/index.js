@@ -114,14 +114,28 @@ function init() {
     //Add the tiled map layer to the map
     map.addLayer(tiles);
     
-	var theDots = omnivore.csv('doom_stats.csv', {
+	var customLayer = L.geoJson(null, {
+		onEachFeature: onEachFeature
+	});	
+	
+	//Load the disasters into a layer
+	var geojsonLayer = omnivore.csv('doom_stats.csv', {
 		latfield: 'lat',
 		lonfield: 'long',
 		delimiter: ','
-	});
+	},
+		customLayer
+	);
 	
-	map.addLayer(theDots);
+	map.addLayer(geojsonLayer);
 
+	
+	
+	
+	//console.log(theDots.toString());
+	
+	
+	
 	
     // //Change the start zoom and font size based on window size
     // var windowWidth = $(window).width();
@@ -216,38 +230,41 @@ function init() {
                                 // '#FFEDA0';
 // }
 
-// function onEachFeature(feature, layer) {
-    // layer.on({
-        // mouseover: highlightFeature,
-        // mouseout: resetHighlight,
-        // click: function (e) {
-            // if (currTarget) {
-                // resetHighlight(currTarget); //reset previously clicked postcode
-            // }
-            // currTarget = e;
-            // highlightFeature(e);
-        // }
-    // });
-// }
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: function (e) {
+            if (currTarget) {
+                resetHighlight(currTarget); //reset previously clicked postcode
+            }
+            currTarget = e;
+            highlightFeature(e);
+        }
+    });
+}
  
-// function highlightFeature(e) {
-    // var layer = e.target;
+function highlightFeature(e) {
+    var layer = e.target;
 
-    // layer.setStyle({
-        // weight: 5,
-        // color: '#666',
-        // fillOpacity: 0.65
-    // });
+	console.log(layer);
+	
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        fillOpacity: 0.65
+    });
 
-    // if (!L.Browser.ie && !L.Browser.opera) {
-        // layer.bringToFront();
-    // }
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
 
-    // info.update(layer.feature.properties);
+    info.update(layer.feature.properties);
 
-// }
+}
 
-// function resetHighlight(e) {
-    // geojsonLayer.resetStyle(e.target);
-    // info.update();
-// }
+function resetHighlight(e) {
+    geojsonLayer.resetStyle(e.target);
+    info.update();
+}
