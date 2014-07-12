@@ -102,7 +102,7 @@ from temp_aemkh_disasters
 where regions != 'Outside Australia'
 and type not in ('Wartime', 'Maritime', 'Epidemic')
 and sub_type not in ('Drought', 'Criminal')
-and id not in (29, 46, 105, 513, 545, 250)
+and id not in (29, 46, 105, 513, 545, 250, 4470, 391, 191, 70)
 and (
   (type <> 'Natural' and deaths > 5)
   or
@@ -119,6 +119,10 @@ update aemkh_disasters set severity = COALESCE(insured_cost, 0::money) + COALESC
 --select * from aemkh_disasters order by severity desc; -- 344
 
 COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.csv' HEADER CSV;
+
+
+select id, year, sub_type, name, description, insured_cost from aemkh_disasters where type = 'Natural' and sub_type != 'Heatwave' order by year desc, insured_cost desc;
+
 
 
 -- 
