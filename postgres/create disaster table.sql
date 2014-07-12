@@ -1,4 +1,4 @@
-﻿DROP TABLE IF EXISTS ica_costs;
+DROP TABLE IF EXISTS ica_costs;
 CREATE TABLE ica_costs
 (
   id integer NOT NULL,
@@ -99,13 +99,13 @@ select id
       ,right(start_date,4)::int
       ,lat
       ,long
-      ,evacuated
-      ,homeless
-      ,injuries
-      ,deaths
-      ,insured_cost
-      ,homes_damaged
-      ,homes_destroyed
+      ,COALESCE(evacuated, 0)
+      ,COALESCE(homeless, 0)
+      ,COALESCE(injuries, 0)
+      ,COALESCE(deaths, 0)
+      ,COALESCE(insured_cost, 0::money)
+      ,COALESCE(homes_damaged, 0)
+      ,COALESCE(homes_destroyed, 0)
       ,regions
       ,url
       ,0
@@ -160,9 +160,21 @@ update aemkh_disasters set normalised_cost_2011 = 1492000000::money where id = 3
 
 --select * from aemkh_disasters where normalised_cost_2011 = 0::money and insured_cost > 0::money order by year desc;
 
-update aemkh_disasters set severity = COALESCE(normalised_cost_2011, 0::money) + COALESCE(deaths, 0) * 3000000::money + COALESCE(injuries, 0) * 500000::money + COALESCE(homeless, 0) * 100000::money + COALESCE(evacuated, 0) * 100000::money;
+update aemkh_disasters set severity = normalised_cost_2011 + (deaths::bigint * 3000000)::money + (injuries::bigint * 500000)::money + (homeless::bigint * 100000)::money + (evacuated::bigint * 100000)::money;
 
 COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.csv' HEADER CSV;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 --select id, year, sub_type, name, description, insured_cost from aemkh_disasters where type = 'Natural' and sub_type != 'Heatwave' order by year desc, insured_cost desc;
@@ -190,12 +202,11 @@ SELECT Count(*), type, SUM(deaths) as deaths
   FROM aemkh_disasters
   group by type;
 
-56;"Transport";940
+173;"Natural";5304
 32;"Man made";658
-252;"Natural";5313
+56;"Transport";940
 
-
-SELECT Count(*), type, SUM(deaths) as deaths, sub_type
+SELECT Count(*), type, SUM(deaths) as deaths, SUM(injuries) as injuries, SUM(normalised_cost_2011) as cost, sub_type
   FROM aemkh_disasters
   group by type, sub_type
   order by type, sub_type;
@@ -216,6 +227,24 @@ Count, type, deaths, sub_type
 24;Transport;371;Rail
 8;Transport;126;Road
 3;Transport;116;Water
+
+
+12;"Man made";148;153;$0.00;"Fire"
+20;"Man made";510;37;$0.00;"Industrial"
+46;"Natural";680;4031;$5,264,500,000.00;"Bushfire"
+29;"Natural";951;700;$9,316,000,000.00;"Cyclone"
+1;"Natural";13;160;$3,240,000,000.00;"Earthquake"
+52;"Natural";609;740;$10,339,019,000.00;"Flood"
+16;"Natural";2887;368;$0.00;"Heatwave"
+4;"Natural";38;7;$0.00;"Landslide"
+1;"Natural";5;95;$0.00;"Riptide"
+24;"Natural";121;209;$7,955,000,000.00;"Storm/Hail"
+21;"Transport";327;16;$0.00;"Air"
+24;"Transport";371;1405;$0.00;"Rail"
+8;"Transport";126;225;$0.00;"Road"
+3;"Transport";116;0;$0.00;"Water"
+
+
 
 
 select * from aemkh_disasters where sub_type = 'Criminal';
