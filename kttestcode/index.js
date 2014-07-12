@@ -8,7 +8,14 @@ var geojsonLayer;
 function init() {
     //Initialize the map on the "map" div
     map = new L.Map('map');
-    
+
+    map.on('zoomend', function() {
+        var currentZoom = map.getZoom();
+        $('#map').attr('data-zoom', currentZoom);
+        // var currentZoom = map.getZoom();
+        // myicon.setRadius(currentZoom);
+    });
+
     //Control that shows state info on hover
     info = L.control();
 
@@ -120,10 +127,11 @@ function init() {
 		
 		pointToLayer: function (feature, latlng) {
 
-            var fireIcon = new L.Icon({iconUrl: 'dist/images/fire_circle.png'});
+            // var myicon = new L.Icon({iconUrl: 'dist/images/fire_circle.png'});
+            var myicon = L.divIcon({className: 'icon_manmade_fire'});
 
 			return L.marker(latlng, {
-				icon: fireIcon
+				icon: myicon
 			});
 		}
 	});	
