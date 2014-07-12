@@ -119,13 +119,11 @@ function init() {
 		onEachFeature: onEachFeature,
 		
 		pointToLayer: function (feature, latlng) {
-			return L.circleMarker(latlng, {
-				radius: 8,
-				fillColor: "#ff7800",
-				color: "#000",
-				weight: 1,
-				opacity: 1,
-				fillOpacity: 0.8
+
+            var fireIcon = new L.Icon({iconUrl: 'dist/images/fire_circle.png'});
+
+			return L.marker(latlng, {
+				icon: fireIcon
 			});
 		}
 	});	
@@ -276,7 +274,8 @@ function highlightFeature(e) {
 					color: "#000",
 					weight: 1,
 					opacity: 1,
-					fillOpacity: 0.8
+					fillOpacity: 0.8,
+                    background: 'fdf'
 				});
 
     // if (!L.Browser.ie && !L.Browser.opera) {
@@ -294,7 +293,7 @@ function resetHighlight(e) {
 
 	//console.log(layer);
 	
-	layer.setIcon(defaultIcon);
+	// layer.setIcon(defaultIcon);
 	
 	
 	
