@@ -1,0 +1,15 @@
+type,sub_type,count,deaths,injuries,cost,cost_text
+Natural,Bushfire,54,680,4053,5932500000,"$5,933m"
+Transport,Rail,24,371,1405,0,Not known
+Natural,Flood,69,609,750,14434231000,"$14,434m"
+Natural,Cyclone,34,951,730,10589000000,"$10,589m"
+Natural,Storm/Hail,66,121,694,18139310000,"$18,139m"
+Natural,Heatwave,17,2887,608,0,Not known
+Transport,Road,8,126,225,0,Not known
+Natural,Earthquake,3,13,180,3412000000,"$3,412m"
+Man made,Fire,12,148,153,0,Not known
+Natural,Riptide,1,5,95,0,Not known
+Man made,Industrial,20,510,37,0,Not known
+Transport,Air,21,327,16,0,Not known
+Natural,Landslide,4,38,7,0,Not known
+Transport,Water,3,116,0,0,Not known

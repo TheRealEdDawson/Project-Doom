@@ -4755,7 +4755,7 @@ L.Path = L.Path.extend({
 		});
 
 		if (e.type === 'contextmenu') {
-			L.DomEvent.preventDefault(e);
+			//L.DomEvent.preventDefault(e);
 		}
 		if (e.type !== 'mousemove') {
 			L.DomEvent.stopPropagation(e);

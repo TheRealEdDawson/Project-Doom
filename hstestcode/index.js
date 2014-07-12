@@ -2,7 +2,21 @@ var map;
 var info;
 //var legend;
 var startZoom = 5;
-var geojsonLayer;
+//var geojsonLayer;
+var layerAir;
+var layerBushfire;
+var layerCyclone;
+var layerEarthquake;
+var layerFire;
+var layerFlood;
+var layerHeatwave;
+var layerIndustrial;
+var layerLandslide;
+var layerRail;
+var layerRiptide;
+var layerRoad;
+var layerStormHail;
+var layerWater;
 
 
 function init() {
@@ -115,31 +129,57 @@ function init() {
     //Add the tiled map layer to the map
     map.addLayer(tiles);
     
-	var customLayer = L.geoJson(null, {
-		onEachFeature: onEachFeature,
+	// var customLayer = L.geoJson(null, {
+		// onEachFeature: onEachFeature,
 		
-		pointToLayer: function (feature, latlng) {
-			return L.circleMarker(latlng, {
-				radius: 8,
-				fillColor: "#ff7800",
-				color: "#000",
-				weight: 1,
-				opacity: 1,
-				fillOpacity: 0.8
-			});
-		}
-	});	
+		// pointToLayer: function (feature, latlng) {
+			// return L.circleMarker(latlng, {
+				// radius: 8,
+				// fillColor: "#ff7800",
+				// color: "#000",
+				// weight: 1,
+				// opacity: 1,
+				// fillOpacity: 0.8
+			// });
+		// }
+	// });	
+
+	var customLayer = L.geoJson(null, {	onEachFeature: onEachFeature });	
 	
-	//Load the disasters into a layer
-	geojsonLayer = omnivore.csv('doom_stats.csv', {
-		latfield: 'lat',
-		lonfield: 'long',
-		delimiter: ','
-	},
-		customLayer
-	);
+	//Load the disasters into their own layer
+	layerAir = omnivore.csv('pntsAir.csv', null, customLayer).addTo(map);
+	layerBushfire = omnivore.csv('pntsBushfire.csv', null, customLayer).addTo(map);
+	layerCyclone = omnivore.csv('pntsCyclone.csv', null, customLayer).addTo(map);
+	layerEarthquake = omnivore.csv('pntsEarthquake.csv', null, customLayer).addTo(map);
+	layerFire = omnivore.csv('pntsFire.csv', null, customLayer).addTo(map);
+	layerFlood = omnivore.csv('pntsFlood.csv', null, customLayer).addTo(map);
+	layerHeatwave = omnivore.csv('pntsHeatwave.csv', null, customLayer).addTo(map);
+	layerIndustrial = omnivore.csv('pntsIndustrial.csv', null, customLayer).addTo(map);
+	layerLandslide = omnivore.csv('pntsLandslide.csv', null, customLayer).addTo(map);
+	layerRail = omnivore.csv('pntsRail.csv', null, customLayer).addTo(map);
+	layerRiptide = omnivore.csv('pntsRiptide.csv', null, customLayer).addTo(map);
+	layerRoad = omnivore.csv('pntsRoad.csv', null, customLayer).addTo(map);
+	layerStormHail = omnivore.csv('pntsStormHail.csv', null, customLayer).addTo(map);
+	layerWater = omnivore.csv('pntsWater.csv', null, customLayer).addTo(map);
+
 	
-	map.addLayer(geojsonLayer);
+	// layerAir
+	// layerBushfire
+	// layerCyclone
+	// layerEarthquake
+	// layerFire
+	// layerFlood
+	// layerHeatwave
+	// layerIndustrial
+	// layerLandslide
+	// layerRail
+	// layerRiptide
+	// layerRoad
+	// layerStormHail
+	// layerWater
+
+	
+	//map.addLayer(geojsonLayer);
 
 	
 	

@@ -83,6 +83,7 @@ CREATE TABLE aemkh_disasters
   url character varying(255) NOT NULL,
   severity money NOT NULL,
   normalised_cost_2011 money NOT NULL,
+  cost_2011_text character varying(50) NOT NULL,
   --geom geometry (POINT, 4326, 2),
   CONSTRAINT aemkh_disasters_pkey PRIMARY KEY (id)
 )
@@ -110,6 +111,7 @@ select id
       ,url
       ,0
       ,0
+      ,''
       --,ST_SetSRID(ST_MakePoint(long, lat), 4326)
 from temp_aemkh_disasters
 where regions != 'Outside Australia'
@@ -121,7 +123,7 @@ and (
   or
   type = 'Natural'
 )
-and (deaths > 0 or (COALESCE(deaths, 0) = 0 and (COALESCE(injuries, 0) > 100 or COALESCE(insured_cost::numeric(11,0), 0) > 0)));
+and (deaths > 0 or (COALESCE(deaths, 0) = 0 and (COALESCE(injuries, 0) > 100 or COALESCE(insured_cost::numeric(12,0), 0) > 0)));
 
 
 update aemkh_disasters set sub_type = 'Storm/Hail' where sub_type IN ('Severe Storm', 'Hail', 'Tornado');
@@ -162,15 +164,84 @@ update aemkh_disasters set normalised_cost_2011 = 1492000000::money where id = 3
 
 update aemkh_disasters set severity = normalised_cost_2011 + (deaths::bigint * 3000000)::money + (injuries::bigint * 500000)::money + (homeless::bigint * 100000)::money + (evacuated::bigint * 100000)::money;
 
-COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.csv' HEADER CSV;
+update aemkh_disasters
+  set cost_2011_text = case
+                    when normalised_cost_2011 = 0::money then 'Not known'
+                    else replace(to_char(normalised_cost_2011::numeric(12,0)/1000000, '$999,999'), ' ', '') || 'm'
+                  end;
+
+
+--COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.csv' HEADER CSV;
+
+
+COPY (select * from aemkh_disasters where sub_type = 'Air') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsAir.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Bushfire') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsBushfire.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Cyclone') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsCyclone.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Earthquake') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsEarthquake.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Fire') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsFire.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Flood') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsFlood.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Heatwave') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsHeatwave.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Industrial') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsIndustrial.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Landslide') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsLandslide.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Rail') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsRail.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Riptide') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsRiptide.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Road') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsRoad.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Storm/Hail') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsStormHail.csv' HEADER CSV;
+COPY (select * from aemkh_disasters where sub_type = 'Water') TO 'C:\minus34\GitHub\Project-Doom\hstestcode/pntsWater.csv' HEADER CSV;
+
+
+COPY (
+  select type
+      ,sub_type
+      ,Count(*) as count
+      ,SUM(deaths) as deaths
+      ,SUM(injuries) as injuries
+      ,SUM(normalised_cost_2011::numeric(12,0)) as cost
+      ,case
+         when SUM(normalised_cost_2011::numeric(12,0)) = 0 then 'Not known'
+         else replace(to_char(SUM(normalised_cost_2011::numeric(12,0))/1000000, '$999,999'), ' ', '') || 'm'
+      end as cost_text 
+    from aemkh_disasters
+    group by type, sub_type
+    order by deaths desc
+) TO 'C:\minus34\GitHub\Project-Doom\hstestcode/statsDeath.csv' HEADER CSV;
+
+COPY (
+  select type
+      ,sub_type
+      ,Count(*) as count
+      ,SUM(deaths) as deaths
+      ,SUM(injuries) as injuries
+      ,SUM(normalised_cost_2011::numeric(12,0)) as cost
+      ,case
+         when SUM(normalised_cost_2011::numeric(12,0)) = 0 then 'Not known'
+         else replace(to_char(SUM(normalised_cost_2011::numeric(12,0))/1000000, '$999,999'), ' ', '') || 'm'
+      end as cost_text 
+    from aemkh_disasters
+    group by type, sub_type
+    order by injuries desc
+) TO 'C:\minus34\GitHub\Project-Doom\hstestcode/statsInjuries.csv' HEADER CSV;
+
+COPY (
+  select type
+      ,sub_type
+      ,Count(*) as count
+      ,SUM(deaths) as deaths
+      ,SUM(injuries) as injuries
+      ,SUM(normalised_cost_2011::numeric(12,0)) as cost
+      ,case
+         when SUM(normalised_cost_2011::numeric(12,0)) = 0 then 'Not known'
+         else replace(to_char(SUM(normalised_cost_2011::numeric(12,0))/1000000, '$999,999'), ' ', '') || 'm'
+      end as cost_text 
+    from aemkh_disasters
+    group by type, sub_type
+    order by cost desc
+) TO 'C:\minus34\GitHub\Project-Doom\hstestcode/statsCost.csv' HEADER CSV;
 
 
 
 
-
-
-
-
+select * from aemkh_disasters;
 
 
 
@@ -197,55 +268,55 @@ COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.cs
 -- select * from aemkh_disasters where homes_destroyed IS NOT NULL order by homes_destroyed desc;
 
 
-
-SELECT Count(*), type, SUM(deaths) as deaths
-  FROM aemkh_disasters
-  group by type;
-
-173;"Natural";5304
-32;"Man made";658
-56;"Transport";940
-
-SELECT Count(*), type, SUM(deaths) as deaths, SUM(injuries) as injuries, SUM(normalised_cost_2011) as cost, sub_type
-  FROM aemkh_disasters
-  group by type, sub_type
-  order by type, sub_type;
-
-
-Count, type, deaths, sub_type
-12;Man made;148;Fire
-20;Man made;510;Industrial
-55;Natural;680;Bushfire
-34;Natural;951;Cyclone
-3;Natural;13;Earthquake
-70;Natural;615;Flood
-17;Natural;2887;Heatwave
-4;Natural;38;Landslide
-1;Natural;5;Riptide
-68;Natural;124;Storm/Hail
-21;Transport;327;Air
-24;Transport;371;Rail
-8;Transport;126;Road
-3;Transport;116;Water
-
-
-12;"Man made";148;153;$0.00;"Fire"
-20;"Man made";510;37;$0.00;"Industrial"
-46;"Natural";680;4031;$5,264,500,000.00;"Bushfire"
-29;"Natural";951;700;$9,316,000,000.00;"Cyclone"
-1;"Natural";13;160;$3,240,000,000.00;"Earthquake"
-52;"Natural";609;740;$10,339,019,000.00;"Flood"
-16;"Natural";2887;368;$0.00;"Heatwave"
-4;"Natural";38;7;$0.00;"Landslide"
-1;"Natural";5;95;$0.00;"Riptide"
-24;"Natural";121;209;$7,955,000,000.00;"Storm/Hail"
-21;"Transport";327;16;$0.00;"Air"
-24;"Transport";371;1405;$0.00;"Rail"
-8;"Transport";126;225;$0.00;"Road"
-3;"Transport";116;0;$0.00;"Water"
-
-
-
-
-select * from aemkh_disasters where sub_type = 'Criminal';
+-- 
+-- SELECT Count(*), type, SUM(deaths) as deaths
+--   FROM aemkh_disasters
+--   group by type;
+-- 
+-- 173;"Natural";5304
+-- 32;"Man made";658
+-- 56;"Transport";940
+-- 
+-- SELECT type, sub_type, Count(*) count, SUM(deaths) as deaths, SUM(injuries) as injuries, SUM(normalised_cost_2011) as cost
+--   FROM aemkh_disasters
+--   group by type, sub_type
+--   order by deaths desc;
+-- 
+-- 
+-- Count, type, deaths, sub_type
+-- 12;Man made;148;Fire
+-- 20;Man made;510;Industrial
+-- 55;Natural;680;Bushfire
+-- 34;Natural;951;Cyclone
+-- 3;Natural;13;Earthquake
+-- 70;Natural;615;Flood
+-- 17;Natural;2887;Heatwave
+-- 4;Natural;38;Landslide
+-- 1;Natural;5;Riptide
+-- 68;Natural;124;Storm/Hail
+-- 21;Transport;327;Air
+-- 24;Transport;371;Rail
+-- 8;Transport;126;Road
+-- 3;Transport;116;Water
+-- 
+-- 
+-- 12;"Man made";148;153;$0.00;"Fire"
+-- 20;"Man made";510;37;$0.00;"Industrial"
+-- 46;"Natural";680;4031;$5,264,500,000.00;"Bushfire"
+-- 29;"Natural";951;700;$9,316,000,000.00;"Cyclone"
+-- 1;"Natural";13;160;$3,240,000,000.00;"Earthquake"
+-- 52;"Natural";609;740;$10,339,019,000.00;"Flood"
+-- 16;"Natural";2887;368;$0.00;"Heatwave"
+-- 4;"Natural";38;7;$0.00;"Landslide"
+-- 1;"Natural";5;95;$0.00;"Riptide"
+-- 24;"Natural";121;209;$7,955,000,000.00;"Storm/Hail"
+-- 21;"Transport";327;16;$0.00;"Air"
+-- 24;"Transport";371;1405;$0.00;"Rail"
+-- 8;"Transport";126;225;$0.00;"Road"
+-- 3;"Transport";116;0;$0.00;"Water"
+-- 
+-- 
+-- 
+-- 
+-- select * from aemkh_disasters where sub_type = 'Criminal';
 
