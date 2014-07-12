@@ -126,16 +126,41 @@ and (deaths > 0 or (COALESCE(deaths, 0) = 0 and (COALESCE(injuries, 0) > 100 or 
 
 update aemkh_disasters set sub_type = 'Storm/Hail' where sub_type IN ('Severe Storm', 'Hail', 'Tornado');
 update aemkh_disasters set sub_type = 'Rail' where sub_type = 'Road/rail';
-update aemkh_disasters set severity = COALESCE(insured_cost, 0::money) + COALESCE(deaths, 0) * 4000000::money + COALESCE(injuries, 0) * 500000::money + COALESCE(homeless, 0) * 100000::money + COALESCE(evacuated, 0) * 100000::money;
 
 --select * from aemkh_disasters where (deaths > 0 or (COALESCE(deaths, 0) = 0 and (COALESCE(injuries, 0) > 100 or COALESCE(insured_cost::numeric(11,0), 0) > 0))) order by insured_cost desc;
 --select * from aemkh_disasters order by severity desc; -- 344
 
+--Bring ICA 2011 cost over
 update aemkh_disasters dis
   set insured_cost = ica.insured_cost
      ,normalised_cost_2011 = ica.normalised_cost_2011
   from ica_costs ica where dis.id = ica.id;
 
+--Bring 2011 and later costs over
+update aemkh_disasters set normalised_cost_2011 = insured_cost where year > 2010 and insured_cost IS NOT NULL; -- 14
+
+update aemkh_disasters set normalised_cost_2011 = 507000000::money where id = 495;
+update aemkh_disasters set normalised_cost_2011 = 109000000::money where id = 24;
+update aemkh_disasters set normalised_cost_2011 = 215000000::money where id IN (63, 224);
+update aemkh_disasters set normalised_cost_2011 = 2645000000::money where id = 114;
+update aemkh_disasters set normalised_cost_2011 = 40000000::money where id = 490;
+update aemkh_disasters set normalised_cost_2011 = 17000000::money where id = 499;
+update aemkh_disasters set normalised_cost_2011 = 28000000::money where id = 442;
+update aemkh_disasters set normalised_cost_2011 = 37000000::money where id = 514;
+update aemkh_disasters set normalised_cost_2011 = 14000000::money where id = 404;
+update aemkh_disasters set normalised_cost_2011 = 99000000::money where id = 424;
+update aemkh_disasters set normalised_cost_2011 = 29000000::money where id = 36;
+update aemkh_disasters set normalised_cost_2011 = 28000000::money where id = 333;
+update aemkh_disasters set normalised_cost_2011 = 31000000::money where id = 338;
+update aemkh_disasters set normalised_cost_2011 = 99000000::money where id = 504;
+update aemkh_disasters set normalised_cost_2011 = 139000000::money where id = 546;
+update aemkh_disasters set normalised_cost_2011 = 179000000::money where id = 427;
+update aemkh_disasters set normalised_cost_2011 = 398000000::money where id = 177;
+update aemkh_disasters set normalised_cost_2011 = 1492000000::money where id = 334;
+
+--select * from aemkh_disasters where normalised_cost_2011 = 0::money and insured_cost > 0::money order by year desc;
+
+update aemkh_disasters set severity = COALESCE(normalised_cost_2011, 0::money) + COALESCE(deaths, 0) * 3000000::money + COALESCE(injuries, 0) * 500000::money + COALESCE(homeless, 0) * 100000::money + COALESCE(evacuated, 0) * 100000::money;
 
 COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.csv' HEADER CSV;
 
