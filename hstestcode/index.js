@@ -116,7 +116,18 @@ function init() {
     map.addLayer(tiles);
     
 	var customLayer = L.geoJson(null, {
-		onEachFeature: onEachFeature
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+			return L.circleMarker(latlng, {
+				radius: 8,
+				fillColor: "#ff7800",
+				color: "#000",
+				weight: 1,
+				opacity: 1,
+				fillOpacity: 0.8
+			});
+		}
 	});	
 	
 	//Load the disasters into a layer
@@ -246,16 +257,27 @@ function onEachFeature(feature, layer) {
     });
 }
 
+
+defaultIcon = new L.Icon({iconUrl: 'dist/images/marker-icon.png'});
+fireIcon = new L.Icon({iconUrl: 'dist/images/fire_circle.png'});
+
+
 function highlightFeature(e) {
     var layer = e.target;
 
-	console.log(layer);
+	//console.log(layer);
+	
+	//layer.setIcon(fireIcon);
+	
 	
     layer.setStyle({
-        weight: 5,
-        color: '#666',
-        fillOpacity: 0.65
-    });
+					radius: 8,
+					fillColor: "#0078ff",
+					color: "#000",
+					weight: 1,
+					opacity: 1,
+					fillOpacity: 0.8
+				});
 
     // if (!L.Browser.ie && !L.Browser.opera) {
         // layer.bringToFront();
@@ -266,6 +288,16 @@ function highlightFeature(e) {
 }
 
 function resetHighlight(e) {
-    geojsonLayer.resetStyle(e.target);
+    //geojsonLayer.resetStyle(e.target);
+	
+	var layer = e.target;
+
+	//console.log(layer);
+	
+	layer.setIcon(defaultIcon);
+	
+	
+	
+	
     info.update();
 }
