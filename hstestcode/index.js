@@ -2,6 +2,7 @@ var map;
 var info;
 //var legend;
 var startZoom = 5;
+var geojsonLayer;
 
 
 function init() {
@@ -119,7 +120,7 @@ function init() {
 	});	
 	
 	//Load the disasters into a layer
-	var geojsonLayer = omnivore.csv('doom_stats.csv', {
+	geojsonLayer = omnivore.csv('doom_stats.csv', {
 		latfield: 'lat',
 		lonfield: 'long',
 		delimiter: ','
@@ -244,7 +245,7 @@ function onEachFeature(feature, layer) {
         }
     });
 }
- 
+
 function highlightFeature(e) {
     var layer = e.target;
 
@@ -256,9 +257,9 @@ function highlightFeature(e) {
         fillOpacity: 0.65
     });
 
-    if (!L.Browser.ie && !L.Browser.opera) {
-        layer.bringToFront();
-    }
+    // if (!L.Browser.ie && !L.Browser.opera) {
+        // layer.bringToFront();
+    // }
 
     info.update(layer.feature.properties);
 
