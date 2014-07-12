@@ -101,7 +101,7 @@ select id
 from temp_aemkh_disasters
 where regions != 'Outside Australia'
 and type not in ('Wartime', 'Maritime', 'Epidemic')
-and sub_type != 'Drought'
+and sub_type not in ('Drought', 'Criminal')
 and id not in (29, 46, 105, 513, 545, 250)
 and (
   (type <> 'Natural' and deaths > 5)
@@ -118,7 +118,7 @@ update aemkh_disasters set severity = COALESCE(insured_cost, 0::money) + COALESC
 --select * from aemkh_disasters where (deaths > 0 or (COALESCE(deaths, 0) = 0 and (COALESCE(injuries, 0) > 100 or COALESCE(insured_cost::numeric(11,0), 0) > 0))) order by insured_cost desc;
 --select * from aemkh_disasters order by severity desc; -- 344
 
-COPY temp_aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\data/doom_stats.csv' HEADER CSV;
+COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.csv' HEADER CSV;
 
 
 -- 
@@ -135,13 +135,13 @@ COPY temp_aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\data/doom_stats.csv
 
 
 
-SELECT Count(*), type
+SELECT Count(*), type, SUM(deaths) as deaths
   FROM aemkh_disasters
   group by type;
 
-56;"Transport"
-36;"Man made"
-252;"Natural"
+56;"Transport";940
+32;"Man made";658
+252;"Natural";5313
 
 
 SELECT Count(*), type, SUM(deaths) as deaths, sub_type
@@ -149,21 +149,23 @@ SELECT Count(*), type, SUM(deaths) as deaths, sub_type
   group by type, sub_type
   order by type, sub_type;
 
-4;"Man made";66;"Criminal"
-12;"Man made";148;"Fire"
-20;"Man made";510;"Industrial"
-55;"Natural";680;"Bushfire"
-34;"Natural";951;"Cyclone"
-3;"Natural";13;"Earthquake"
-70;"Natural";615;"Flood"
-17;"Natural";2887;"Heatwave"
-4;"Natural";38;"Landslide"
-1;"Natural";5;"Riptide"
-68;"Natural";124;"Storm/Hail"
-21;"Transport";327;"Air"
-24;"Transport";371;"Rail"
-8;"Transport";126;"Road"
-3;"Transport";116;"Water"
+
+Count, type, deaths, sub_type
+12;Man made;148;Fire
+20;Man made;510;Industrial
+55;Natural;680;Bushfire
+34;Natural;951;Cyclone
+3;Natural;13;Earthquake
+70;Natural;615;Flood
+17;Natural;2887;Heatwave
+4;Natural;38;Landslide
+1;Natural;5;Riptide
+68;Natural;124;Storm/Hail
+21;Transport;327;Air
+24;Transport;371;Rail
+8;Transport;126;Road
+3;Transport;116;Water
 
 
+select * from aemkh_disasters where sub_type = 'Criminal';
 
