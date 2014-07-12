@@ -1,5 +1,18 @@
-﻿DROP TABLE IF EXISTS temp_aemkh_disasters;
+﻿DROP TABLE IF EXISTS ica_costs;
+CREATE TABLE ica_costs
+(
+  id integer NOT NULL,
+  insured_cost money NULL,
+  normalised_cost_2011 money NULL,
+  CONSTRAINT ica_costs_pkey PRIMARY KEY (id)
+)
+WITH (OIDS=FALSE);
+ALTER TABLE ica_costs OWNER TO postgres;
 
+COPY ica_costs FROM 'C:\minus34\GitHub\Project-Doom\data/ICA Data.csv' HEADER QUOTE '"' CSV;
+
+
+DROP TABLE IF EXISTS temp_aemkh_disasters;
 CREATE TABLE temp_aemkh_disasters
 (
   id integer NOT NULL,
@@ -69,7 +82,7 @@ CREATE TABLE aemkh_disasters
   regions character varying(50) NOT NULL,
   url character varying(255) NOT NULL,
   severity money NOT NULL,
-  cost_2011 money NOT NULL,
+  normalised_cost_2011 money NOT NULL,
   --geom geometry (POINT, 4326, 2),
   CONSTRAINT aemkh_disasters_pkey PRIMARY KEY (id)
 )
@@ -118,11 +131,20 @@ update aemkh_disasters set severity = COALESCE(insured_cost, 0::money) + COALESC
 --select * from aemkh_disasters where (deaths > 0 or (COALESCE(deaths, 0) = 0 and (COALESCE(injuries, 0) > 100 or COALESCE(insured_cost::numeric(11,0), 0) > 0))) order by insured_cost desc;
 --select * from aemkh_disasters order by severity desc; -- 344
 
+update aemkh_disasters dis
+  set insured_cost = ica.insured_cost
+     ,normalised_cost_2011 = ica.normalised_cost_2011
+  from ica_costs ica where dis.id = ica.id;
+
+
 COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.csv' HEADER CSV;
 
 
-select id, year, sub_type, name, description, insured_cost from aemkh_disasters where type = 'Natural' and sub_type != 'Heatwave' order by year desc, insured_cost desc;
+--select id, year, sub_type, name, description, insured_cost from aemkh_disasters where type = 'Natural' and sub_type != 'Heatwave' order by year desc, insured_cost desc;
 
+-- 
+-- select dis.insured_cost, ica.insured_cost, * from aemkh_disasters dis, ica_costs ica where dis.id = ica.id
+-- and COALESCE(dis.insured_cost, 0::money) <> COALESCE(ica.insured_cost, 0::money);
 
 
 -- 
