@@ -147,9 +147,11 @@ function init() {
     map.setView(new L.LatLng(-28.3, 135.0), startZoom);
 
     //Acknowledge the data providers
-    map.attributionControl.addAttribution('Disaster data © <a href="http://www.abs.gov.au/websitedbs/D3310114.nsf/Home/%C2%A9+Copyright">ABS</a>');
-    map.attributionControl.addAttribution('<a href="http://www.dse.vic.gov.au/">Victorian Department of Sustainability and Environment</a>');
+    map.attributionControl.addAttribution('Disaster data © <a href="http://www.ag.gov.au/Pages/Copyright.aspx">Attorney General\'s Department</a>');
+    map.attributionControl.addAttribution('<a href="http://www.insurancecouncil.com.au/industry-statistics-data/disaster-statistics/historical-disaster-statistics">Insurance Council of Australia</a>');
 
+	
+	
     // //Load the boundaries
     // json = (function () {
         // var json = null;
