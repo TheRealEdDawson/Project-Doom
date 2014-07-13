@@ -37,21 +37,39 @@ function init() {
     //Add the tiled map layer to the map
     map.addLayer(tiles);
    
-    //Replace with user driven action
-	layerAir.addTo(map);
-	layerBushfire.addTo(map);
-	layerCyclone.addTo(map);
-	layerEarthquake.addTo(map);
-	layerFire.addTo(map);
-	layerFlood.addTo(map);
-	layerHeatwave.addTo(map);
-	layerIndustrial.addTo(map);
-	layerLandslide.addTo(map);
-	layerRail.addTo(map);
-	layerRiptide.addTo(map);
-	layerRoad.addTo(map);
-	layerStormHail.addTo(map);
-	layerWater.addTo(map);
+   
+
+   
+   
+   
+    // //Replace with user driven action
+	// layerAir.addTo(map);
+	// layerBushfire.addTo(map);
+	// layerCyclone.addTo(map);
+	// layerEarthquake.addTo(map);
+	// layerFire.addTo(map);
+	//layerFlood.addTo(map);
+	// layerHeatwave.addTo(map);
+	// layerIndustrial.addTo(map);
+	// layerLandslide.addTo(map);
+	// layerRail.addTo(map);
+	// layerRiptide.addTo(map);
+	// layerRoad.addTo(map);
+	// layerStormHail.addTo(map);
+	// layerWater.addTo(map);
+
+
+    //Clustering testing
+	var markers = new L.MarkerClusterGroup({ chunkedLoading: true });
+	
+	
+	
+	markers.addLayer(layerFlood);
+
+	
+	map.addLayer(markers);
+
+
 	
 	// layerAir
 	// layerBushfire
