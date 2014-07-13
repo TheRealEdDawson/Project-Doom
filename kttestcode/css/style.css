@@ -155,3 +155,33 @@ html,body { padding: 0; margin: 0; font-size: 100%; }
 [data-zoom="6"] .leaflet-marker-icon .death{
 	display: none;
 }
+
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5),
+only screen and (min-resolution: 144dpi)
+{
+	.map_filter h1 { background-image:url(../images/projectdoom@2x.png); background-size: 139px 15px; }
+
+	.map_filter label:after { background-size: 32px 32px; }
+
+	.map_filter label[data-type=transport]:after { background-image: url(../images/icon_transport@2x.png); }
+	.map_filter label[data-type=manmade]:after { background-image: url(../images/icon_manmade@2x.png); }
+	.map_filter label[data-type=natural]:after { background-image: url(../images/icon_natural@2x.png); }
+	.map_filter label[data-type=transport_air]:after { background-image: url(../images/icon_transport_air@2x.png); }
+	.map_filter label[data-type=transport_rail]:after { background-image: url(../images/icon_transport_rail@2x.png);}
+	.map_filter label[data-type=transport_road]:after { background-image: url(../images/icon_transport_road@2x.png); }
+	.map_filter label[data-type=transport_water]:after { background-image: url(../images/icon_transport_water@2x.png); }
+
+	.map_filter label[data-type=natural_bushfire]:after { background-image: url(../images/icon_natural_bushfire@2x.png); }
+	.map_filter label[data-type=natural_cyclone]:after { background-image: url(../images/icon_natural_cyclone@2x.png); }
+	.map_filter label[data-type=natural_earthquake]:after { background-image: url(../images/icon_natural_earthquake@2x.png); }
+	.map_filter label[data-type=natural_flood]:after { background-image: url(../images/icon_natural_flood@2x.png); }
+	.map_filter label[data-type=natural_heatwave]:after { background-image: url(../images/icon_natural_heatwave@2x.png); }
+	.map_filter label[data-type=natural_landslide]:after { background-image: url(../images/icon_natural_landslide@2x.png); }
+	.map_filter label[data-type=natural_riptide]:after { background-image: url(../images/icon_natural_riptide@2x.png); }
+	.map_filter label[data-type=natural_storm]:after { background-image: url(../images/icon_natural_storm@2x.png); }
+
+	.map_filter label[data-type=manmade_fire]:after { background-image: url(../images/icon_manmade_fire@2x.png); }
+	.map_filter label[data-type=manmade_industrial]:after { background-image: url(../images/icon_manmade_industrial@2x.png); }
+}

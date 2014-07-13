@@ -169,8 +169,7 @@ function init() {
                 var showdeath_max = 33;
                 var showinjuries_max = 30;
                 var showhomes_max = 16;
-                console.log(feature.properties);
-                var icon_img = '<img src="images/' + imagename + '.png">';
+                var icon_img = '<img src="images/' + imagename + '@2x.png">';
                 var icon_class = imagename;
                 var name = feature.properties.name;
                 var description = feature.properties.description.substring(0, 150) + '...';
