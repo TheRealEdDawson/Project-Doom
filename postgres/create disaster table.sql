@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS ica_costs;
+﻿DROP TABLE IF EXISTS ica_costs;
 CREATE TABLE ica_costs
 (
   id integer NOT NULL,

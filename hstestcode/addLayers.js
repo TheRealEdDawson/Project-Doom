@@ -77,6 +77,10 @@ var layerFire = omnivore.csv('pntsFire.csv', null, pntsFire);
 // });
 
 
+
+
+
+
 var pntsFlood = L.geoJson(null, {
 	onEachFeature: onEachFeature,
 	
