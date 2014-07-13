@@ -1,8 +1,33 @@
-//Loads the data layers ready for adding to the map
+var map;
+//var info;
+//var legend;
+var startZoom = 5;
+//var geojsonLayer;
+var markers;
 
+
+function init() {
+    //Initialize the map on the "map" div
+    map = new L.Map('map');
+
+	L.control.locate().addTo(map);
+
+	var tiles = new L.TileLayer('https://api.tiles.mapbox.com/v4/base.live-land-tr+0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00,base.live-landuse-tr+0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00,base.mapbox-streets+bg-e8e0d8_scale-1_water-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_streets-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_landuse-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_buildings-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q&update=hxjp2', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+        maxZoom: 14,
+        opacity: 0.75
+    });
+
+    //Add the tiled map layer to the map
+    map.addLayer(tiles);
+   
+   
+//Loads the data layers ready for adding to the map
+var clusterAir = new L.MarkerClusterGroup();
 var pntsAir = L.geoJson(null, {
-	onEachFeature: onEachFeature,
-	
+	onEachFeature: function (feature, layer) { 
+        clusterAir.addLayer(layer);
+    },
 	pointToLayer: function (feature, latlng) {
 		var myicon = L.divIcon({ className: 'icon_transport_air', html: '<img src="images/icon_transport_air.png">' });
 		return L.marker(latlng, { icon: myicon });
@@ -51,36 +76,6 @@ var pntsFire = L.geoJson(null, {
 });
 var layerFire = omnivore.csv('pntsFire.csv', null, pntsFire);
 
-
-
-
-
-// var pntsFlood
-
-// $.ajax({
-	// url: 'pntsFlood.csv',
-	// success: function (data) {
-		// var fred = $.csv.toArrays(data);
-		
-		// var geoJson = $.toJSON(fred);
-		
-		// pntsFlood = L.geoJson(geoJson, {
-			// onEachFeature: onEachFeature,
-			
-			// pointToLayer: function (feature, latlng) {
-				// var myicon = L.divIcon({ className: 'icon_natural_flood', html: '<img src="images/icon_natural_flood.png">' });
-				// return L.marker(latlng, { icon: myicon });
-			// }
-		// });
-		
-	// }
-// });
-
-
-
-
-
-
 var pntsFlood = L.geoJson(null, {
 	onEachFeature: onEachFeature,
 	
@@ -90,15 +85,6 @@ var pntsFlood = L.geoJson(null, {
 	}
 });
 var layerFlood = omnivore.csv('pntsFlood.csv', null, pntsFlood);
-
-
-
-
-
-
-
-
-
 
 var pntsHeatwave = L.geoJson(null, {
 	onEachFeature: onEachFeature,
@@ -180,3 +166,119 @@ var pntsWater = L.geoJson(null, {
 });
 var layerWater = omnivore.csv('pntsWater.csv', null, pntsWater);
 
+
+   
+   
+   
+    // //Replace with user driven action
+	// layerAir.addTo(map);
+	// layerBushfire.addTo(map);
+	// layerCyclone.addTo(map);
+	// layerEarthquake.addTo(map);
+	// layerFire.addTo(map);
+	// layerFlood.addTo(map);
+	// layerHeatwave.addTo(map);
+	// layerIndustrial.addTo(map);
+	// layerLandslide.addTo(map);
+	// layerRail.addTo(map);
+	// layerRiptide.addTo(map);
+	// layerRoad.addTo(map);
+	// layerStormHail.addTo(map);
+	// layerWater.addTo(map);
+	
+
+    //Clustering testing
+	//markers = new L.MarkerClusterGroup();
+	//markers.addLayer(layerFlood);
+	map.addLayer(clusterAir);
+	
+	
+	
+	// layerFlood.eachLayer(function (layer) {
+		// var props = layer.feature.properties;
+		
+		
+		// var title = props.name;
+		
+		// console.log(title);
+		
+		// var marker = L.marker(L.latLng(props.lat, props.long), { title: title });
+		// marker.bindPopup(title);
+		// markers.addLayer(marker);
+	// });
+	
+	
+	// for (var i = 0; i < layerFlood.length; i++) {
+		// var a = layerFlood[i];
+		// var title = a.feature.properties.name;
+		// var marker = L.marker(L.latLng(a.feature.properties.lat, a.feature.properties.long), { title: title });
+		// marker.bindPopup(title);
+		// markers.addLayer(marker);
+	// }
+	
+	
+	
+
+
+
+	
+	// layerAir
+	// layerBushfire
+	// layerCyclone
+	// layerEarthquake
+	// layerFire
+	// layerFlood
+	// layerHeatwave
+	// layerIndustrial
+	// layerLandslide
+	// layerRail
+	// layerRiptide
+	// layerRoad
+	// layerStormHail
+	// layerWater
+
+
+
+    //Set the view to a given center and zoom
+    map.setView(new L.LatLng(-28.3, 135.0), startZoom);
+
+    //Acknowledge the data providers
+    map.attributionControl.addAttribution('Disaster data © <a href="http://www.ag.gov.au/Pages/Copyright.aspx">Attorney General\'s Dept</a>');
+    map.attributionControl.addAttribution('<a href="http://www.insurancecouncil.com.au/industry-statistics-data/disaster-statistics/historical-disaster-statistics">Insurance Council of Aus</a>');
+    map.attributionControl.addAttribution('This work is licensed <a href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>');
+}
+
+
+
+function onEachFeature(feature, layer) {
+	//markers.addLayer(layer);
+
+    // layer.on({
+        // mouseover: highlightFeature,
+        // mouseout: resetHighlight,
+        // click: function (e) {
+            // if (currTarget) {
+                // resetHighlight(currTarget); //reset previously clicked postcode
+            // }
+            // currTarget = e;
+            // highlightFeature(e);
+        // }
+    // });
+}
+
+
+function highlightFeature(e) {
+    var layer = e.target;
+
+    info.update(layer.feature.properties);
+
+}
+
+function resetHighlight(e) {
+	var layer = e.target;
+
+	
+	//layer.setIcon(defaultIcon);
+	
+    info.update();
+}
