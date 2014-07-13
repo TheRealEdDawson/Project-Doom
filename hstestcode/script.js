@@ -141,7 +141,7 @@ function init() {
         return new Array( num + 1 ).join( this );
     }
 
-	markers = new L.MarkerClusterGroup();	
+	//markers = new L.MarkerClusterGroup();	
 	
     function readcsv(obj) {
         var filename = obj.filename;
@@ -150,7 +150,7 @@ function init() {
         var radius = obj.radius;
 		var pnts = L.geoJson(null, {
             onEachFeature: function(feature, layer) {
-				markers.addLayer(layer);
+				//markers.addLayer(layer);
 			},
             
             pointToLayer: function (feature, latlng) {
@@ -247,16 +247,12 @@ function init() {
 
     }
 
-	
-	map.addLayer(markers);
+	//map.addLayer(markers);
 		
-    // for(var i=0;i<pnts_layers.length;i++){
-        // pnts_layers[i]['marker'].addTo(map);
-    // }
+    for(var i=0;i<pnts_layers.length;i++){
+        pnts_layers[i]['marker'].addTo(map);
+    }
 	
-    // for(var i=0;i<pnts_layers.length;i++){
-    //     pnts_layers[i]['radius'].addTo(map);
-    // }
 
 
     // Replace with user driven action
