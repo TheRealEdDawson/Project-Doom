@@ -51,6 +51,32 @@ var pntsFire = L.geoJson(null, {
 });
 var layerFire = omnivore.csv('pntsFire.csv', null, pntsFire);
 
+
+
+
+
+// var pntsFlood
+
+// $.ajax({
+	// url: 'pntsFlood.csv',
+	// success: function (data) {
+		// var fred = $.csv.toArrays(data);
+		
+		// var geoJson = $.toJSON(fred);
+		
+		// pntsFlood = L.geoJson(geoJson, {
+			// onEachFeature: onEachFeature,
+			
+			// pointToLayer: function (feature, latlng) {
+				// var myicon = L.divIcon({ className: 'icon_natural_flood', html: '<img src="images/icon_natural_flood.png">' });
+				// return L.marker(latlng, { icon: myicon });
+			// }
+		// });
+		
+	// }
+// });
+
+
 var pntsFlood = L.geoJson(null, {
 	onEachFeature: onEachFeature,
 	
@@ -60,6 +86,15 @@ var pntsFlood = L.geoJson(null, {
 	}
 });
 var layerFlood = omnivore.csv('pntsFlood.csv', null, pntsFlood);
+
+
+
+
+
+
+
+
+
 
 var pntsHeatwave = L.geoJson(null, {
 	onEachFeature: onEachFeature,

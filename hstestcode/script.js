@@ -58,16 +58,43 @@ function init() {
 	// layerStormHail.addTo(map);
 	// layerWater.addTo(map);
 
+	
+	
+	map.addLayer(layerFlood);
+	
 
     //Clustering testing
-	var markers = new L.MarkerClusterGroup({ chunkedLoading: true });
+	//var markers = new L.MarkerClusterGroup();
 	
 	
-	
-	markers.addLayer(layerFlood);
+	//markers.addLayer(layerFlood);
 
 	
-	map.addLayer(markers);
+	// layerFlood.eachLayer(function (layer) {
+		// var props = layer.feature.properties;
+		
+		
+		// var title = props.name;
+		
+		// console.log(title);
+		
+		// var marker = L.marker(L.latLng(props.lat, props.long), { title: title });
+		// marker.bindPopup(title);
+		// markers.addLayer(marker);
+	// });
+	
+	
+	// for (var i = 0; i < layerFlood.length; i++) {
+		// var a = layerFlood[i];
+		// var title = a.feature.properties.name;
+		// var marker = L.marker(L.latLng(a.feature.properties.lat, a.feature.properties.long), { title: title });
+		// marker.bindPopup(title);
+		// markers.addLayer(marker);
+	// }
+	
+	
+	
+	//map.addLayer(markers);
 
 
 	
