@@ -8,12 +8,14 @@ var layer_pnts = [
     {
         "filename": "pntsAir",
         "imagename": "icon_transport_air",
+        "type": "icon_transport",
         "color": "#fda128",
         "radius": 50
     },
     {
         "filename": "pntsBushfire",
         "imagename": "icon_natural_bushfire",
+        "type": "icon_natural",
         "color": "#18a762",
         "radius": 50
     },
@@ -21,72 +23,84 @@ var layer_pnts = [
     {
         "filename": "pntsCyclone",
         "imagename": "icon_natural_cyclone",
+        "type": "icon_natural",
         "color": "#18a762",
         "radius": 50
     },
     {
         "filename": "pntsEarthquake",
         "imagename": "icon_natural_earthquake",
+        "type": "icon_natural",
         "color": "#18a762",
         "radius": 50
     },
     {
         "filename": "pntsFire",
         "imagename": "icon_manmade_fire",
+        "type": "icon_manmade",
         "color": "#e30202",
         "radius": 50
     },
     {
         "filename": "pntsFlood",
         "imagename": "icon_natural_flood",
+        "type": "icon_natural",
         "color": "#18a762",
         "radius": 50
     },
     {
         "filename": "pntsHeatwave",
         "imagename": "icon_natural_heatwave",
+        "type": "icon_natural",
         "color": "#18a762",
         "radius": 50
     },
     {
         "filename": "pntsIndustrial",
         "imagename": "icon_manmade_industrial",
+        "type": "icon_manmade",
         "color": "#e30202",
         "radius": 50
     },
     {
         "filename": "pntsLandslide",
         "imagename": "icon_natural_landslide",
+        "type": "icon_natural",
         "color": "#18a762",
         "radius": 50
     },
     {
         "filename": "pntsRail",
         "imagename": "icon_transport_rail",
+        "type": "icon_transport",
         "color": "#fda128",
         "radius": 50
     },
     {
         "filename": "pntsRiptide",
         "imagename": "icon_natural_riptide",
+        "type": "icon_natural",
         "color": "#18a762",
         "radius": 50
     },
     {
         "filename": "pntsRoad",
         "imagename": "icon_transport_road",
+        "type": "icon_transport",
         "color": "#fda128",
         "radius": 50
     },
     {
         "filename": "pntsStormHail",
         "imagename": "icon_natural_storm",
+        "type": "icon_natural",
         "color": "#18a762",
         "radius": 50
     },
     {
         "filename": "pntsWater",
         "imagename": "icon_transport_water",
+        "type": "icon_transport",
         "color": "#fda128",
         "radius": 50
     }
@@ -117,12 +131,13 @@ function init() {
 
     info.addTo(map);
 
-    //Add funky new Mozilla themed MapBox tiles
-    var tiles = new L.TileLayer('http://d.tiles.mapbox.com/v3/mozilla-webprod.e91ef8b3/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
-        maxZoom: 14,
-        opacity: 0.65
-    });
+    //Add funky new Mozilla themed MapBox tiles" with this:
+
+    var tiles = new L.TileLayer('https://api.tiles.mapbox.com/v4/base.live-land-tr+0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00,base.live-landuse-tr+0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00,base.mapbox-streets+bg-e8e0d8_scale-1_water-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_streets-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_landuse-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_buildings-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q&update=hxjp2', {
+       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+       maxZoom: 14,
+       opacity: 0.75
+   });
 
     //Add the tiled map layer to the map
     map.addLayer(tiles);
@@ -143,6 +158,7 @@ function init() {
     function readcsv(obj) {
         var filename = obj.filename;
         var imagename = obj.imagename;
+        var type = obj.type;
         var color = obj.color;
         var radius = obj.radius;
         var pnts = L.geoJson(null, {
@@ -203,7 +219,7 @@ function init() {
                 var popup_content = type_html + title_html + death_row + injuries_row + homes_row + lost_row + desc_row + close_button;
 
                 var myicon = L.divIcon({
-                    className: icon_class,
+                    className: icon_class + " " + type,
                     html: '<h3>' + name + '</h3>' + icon_img + '<p class="death">' + death_num + ' Deaths</p>'
                 });
 
