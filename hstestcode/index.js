@@ -75,64 +75,140 @@ function init() {
 			return L.marker(latlng, { icon: myicon });
 		}
 	});
-	
 	layerAir = omnivore.csv('pntsAir.csv', null, pntsAir).addTo(map);
 	
+	var pntsBushfire = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_natural_bushfire', html: '<img src="images/icon_natural_bushfire.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerBushfire = omnivore.csv('pntsBushfire.csv', null, pntsBushfire).addTo(map);
 	
 	
-	// //Create Icons
-	// var iconAir.setIcon('images/icon_transport_air.png');
-	// var iconBushfire.setIcon('images/icon_natural_bushfire.png');
-	// var iconCyclone.setIcon('images/icon_natural_cyclone.png');
-	// var iconEarthquake.setIcon('images/icon_natural_earthquake.png');
-	// var iconFire.setIcon('images/icon_manmade_fire.png');
-	// var iconFlood.setIcon('images/icon_natural_flood.png');
-	// var iconHeatwave.setIcon('images/icon_natural_heatwave.png');
-	// var iconIndustrial.setIcon('images/icon_manmade_industrial.png');
-	// var iconLandslide.setIcon('images/icon_natural_landslide.png');
-	// var iconRail.setIcon('images/icon_transport_rail.png');
-	// var iconRiptide.setIcon('images/icon_natural_riptide.png');
-	// var iconRoad.setIcon('images/icon_transport_road.png');
-	// var iconStormHail.setIcon('images/icon_natural_storm.png');
-	// var iconWater.setIcon('images/icon_transport_water.png');
+	var pntsCyclone = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_natural_cyclone', html: '<img src="images/icon_natural_cyclone.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerCyclone = omnivore.csv('pntsCyclone.csv', null, pntsCyclone).addTo(map);
 	
+	var pntsEarthquake = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_natural_earthquake', html: '<img src="images/icon_natural_earthquake.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerEarthquake = omnivore.csv('pntsEarthquake.csv', null, pntsEarthquake).addTo(map);
 	
-	
-	
-	// var customLayer = L.geoJson(null, {	onEachFeature: onEachFeature });	
-	
-	
-	// //Load the disasters into their own layer
-	// layerAir = omnivore.csv('pntsAir.csv', null, customLayer);
-	// layerBushfire = omnivore.csv('pntsBushfire.csv', null, customLayer);
-	// layerCyclone = omnivore.csv('pntsCyclone.csv', null, customLayer);
-	// layerEarthquake = omnivore.csv('pntsEarthquake.csv', null, customLayer);
-	// layerFire = omnivore.csv('pntsFire.csv', null, customLayer);
-	// layerFlood = omnivore.csv('pntsFlood.csv', null, customLayer);
-	// layerHeatwave = omnivore.csv('pntsHeatwave.csv', null, customLayer);
-	// layerIndustrial = omnivore.csv('pntsIndustrial.csv', null, customLayer);
-	// layerLandslide = omnivore.csv('pntsLandslide.csv', null, customLayer);
-	// layerRail = omnivore.csv('pntsRail.csv', null, customLayer);
-	// layerRiptide = omnivore.csv('pntsRiptide.csv', null, customLayer);
-	// layerRoad = omnivore.csv('pntsRoad.csv', null, customLayer);
-	// layerStormHail = omnivore.csv('pntsStormHail.csv', null, customLayer);
-	// layerWater = omnivore.csv('pntsWater.csv', null, customLayer);
+	var pntsFire = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_manmade_fire', html: '<img src="images/icon_manmade_fire.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerFire = omnivore.csv('pntsFire.csv', null, pntsFire).addTo(map);
 
+	var pntsFlood = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_natural_flood', html: '<img src="images/icon_natural_flood.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerFlood = omnivore.csv('pntsFlood.csv', null, pntsFlood).addTo(map);
 
-	// layerAir.setIcon('images/icon_transport_air.png');
-	// layerBushfire.setIcon('images/icon_natural_bushfire.png');
-	// layerCyclone.setIcon('images/icon_natural_cyclone.png');
-	// layerEarthquake.setIcon('images/icon_natural_earthquake.png');
-	// layerFire.setIcon('images/icon_manmade_fire.png');
-	// layerFlood.setIcon('images/icon_natural_flood.png');
-	// layerHeatwave.setIcon('images/icon_natural_heatwave.png');
-	// layerIndustrial.setIcon('images/icon_manmade_industrial.png');
-	// layerLandslide.setIcon('images/icon_natural_landslide.png');
-	// layerRail.setIcon('images/icon_transport_rail.png');
-	// layerRiptide.setIcon('images/icon_natural_riptide.png');
-	// layerRoad.setIcon('images/icon_transport_road.png');
-	// layerStormHail.setIcon('images/icon_natural_storm.png');
-	// layerWater.setIcon('images/icon_transport_water.png');
+	var pntsHeatwave = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_natural_heatwave', html: '<img src="images/icon_natural_heatwave.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerHeatwave = omnivore.csv('pntsHeatwave.csv', null, pntsHeatwave).addTo(map);
+
+	var pntsIndustrial = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_manmade_industrial', html: '<img src="images/icon_manmade_industrial.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerIndustrial = omnivore.csv('pntsIndustrial.csv', null, pntsIndustrial).addTo(map);
+
+	var pntsLandslide = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_natural_landslide', html: '<img src="images/icon_natural_landslide.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerLandslide = omnivore.csv('pntsLandslide.csv', null, pntsLandslide).addTo(map);
+
+	var pntsRail = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_transport_rail', html: '<img src="images/icon_transport_rail.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerRail = omnivore.csv('pntsRail.csv', null, pntsRail).addTo(map);
+
+	var pntsRiptide = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_natural_riptide', html: '<img src="images/icon_natural_riptide.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerRiptide = omnivore.csv('pntsRiptide.csv', null, pntsRiptide).addTo(map);
+
+	var pntsRoad = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_transport_road', html: '<img src="images/icon_transport_road.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerRoad = omnivore.csv('pntsRoad.csv', null, pntsRoad).addTo(map);
+
+	var pntsStormHail = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_natural_storm', html: '<img src="images/icon_natural_storm.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerStormHail = omnivore.csv('pntsStormHail.csv', null, pntsStormHail).addTo(map);
+
+	var pntsWater = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_transport_water', html: '<img src="images/icon_transport_water.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	layerWater = omnivore.csv('pntsWater.csv', null, pntsWater).addTo(map);
+
+	
 	
 	// layerAir.addTo(map);
 	// layerBushfire.addTo(map);
