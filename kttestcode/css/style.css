@@ -14,7 +14,10 @@ html,body { padding: 0; margin: 0; font-size: 100%; }
 .map_filter li ul { overflow: hidden; max-height: 0; -webkit-transition: all .2s; -moz-transition: all .2s; -o-transition: all .2s; transition: all .2s; }
 .map_filter li.expand ul { max-height: 10000px; }
 
-.map_filter li label:after { content: ''; position: absolute; width: 32px; height: 32px; top: 50%; right: 30px; margin: -16px 0 0 0; background-repeat: no-repeat; background-position: 50% 50%; }
+.map_filter li label { color: #aaa; }
+.map_filter li label.checked { color: #000; }
+.map_filter li label:after { content: ''; position: absolute; width: 32px; height: 32px; top: 50%; right: 30px; margin: -16px 0 0 0; background-repeat: no-repeat; background-position: 50% 50%; opacity: 0.5; }
+.map_filter li label.checked:after { opacity: 1; }
 .map_filter label[data-type=transport]:after { background-image: url(../images/icon_transport.png); }
 .map_filter label[data-type=manmade]:after { background-image: url(../images/icon_manmade.png); }
 .map_filter label[data-type=natural]:after { background-image: url(../images/icon_natural.png); }

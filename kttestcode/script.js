@@ -436,19 +436,30 @@ function resetHighlight(e) {
 $(function() {
     $('#map_filter [level=parent]').change(function() {
         $('#map_filter [name='+$(this).val()+']').prop('checked', $(this).is(":checked")).change();
-    });
+        if ($(this).is(":checked")) {
+            $(this).parent().addClass('checked');
+        } else {
+            $(this).parent().removeClass('checked');
+        }
+   });
     $('#map_filter [level=all]').change(function() {
         $('#map_filter [level=parent]').prop('checked', $(this).is(":checked")).change();
+        if ($(this).is(":checked")) {
+            $(this).parent().addClass('checked');
+        } else {
+            $(this).parent().removeClass('checked');
+        }
     });
     $('#map_filter [level=child]').change(function() {
         if ($(this).is(":checked")) {
+            $(this).parent().addClass('checked');
             $('.' + $(this).val()).show();
-            console.log('show ' + $(this).val() + ' layer');
         } else {
-            console.log('hide ' + $(this).val() + ' layer');
+            $(this).parent().removeClass('checked');
             $('.' + $(this).val()).hide();
         }
     });
+    $('#map_filter [level=all]').prop('checked','true').change();
     $('#map_filter .exp').click(function() {
         var parent = $(this).parent();
         if (parent.hasClass('expand')) {
