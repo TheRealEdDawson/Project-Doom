@@ -9,6 +9,14 @@
     <script src="dist/leaflet-src.js" type="text/javascript"></script>
     <script src="script.js" type="text/javascript"></script>
 	<script src="dist/leaflet-omnivore.min.js" type="text/javascript"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css' rel='stylesheet' />
+    <!--[if lt IE 9]>
+      <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.21.0/L.Control.Locate.ie.css' rel='stylesheet' />
+    <![endif]-->
+	<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+	<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
     <link rel="stylesheet" href="css/style.css" />
 
     <style>
@@ -64,28 +72,28 @@
             </li>
             <li>
                 <label>
-                    <input checked type="checkbox" level="parent" name="parent" value="transports">Transports
+                    <input checked type="checkbox" level="parent" name="parent" value="transport">Transport
                 </label>
                 <span class="exp"></span>
                 <ul>
                     <li>
                         <label>
-                            <input checked type="checkbox" level="child" name="transports" value="icon_transport_air">Air
+                            <input checked type="checkbox" level="child" name="transport" value="icon_transport_air">Air
                         </label>
                     </li>
                     <li>
                         <label>
-                            <input checked type="checkbox" level="child" name="transports" value="icon_transport_rail">Rail
+                            <input checked type="checkbox" level="child" name="transport" value="icon_transport_rail">Rail
                         </label>
                     </li>
                     <li>
                         <label>
-                            <input checked type="checkbox" level="child" name="transports" value="icon_transport_road">Road
+                            <input checked type="checkbox" level="child" name="transport" value="icon_transport_road">Road
                         </label>
                     </li>
                     <li>
                         <label>
-                            <input checked type="checkbox" level="child" name="transports" value="icon_transport_water">Water
+                            <input checked type="checkbox" level="child" name="transport" value="icon_transport_water">Water
                         </label>
                     </li>
                 </ul>

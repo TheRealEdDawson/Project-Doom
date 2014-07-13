@@ -3,6 +3,8 @@ var info;
 //var legend;
 var startZoom = 5;
 var geojsonLayer;
+var markers;
+
 
 var layer_pnts = [
     {
@@ -103,24 +105,24 @@ function init() {
 
     //Control that shows state info on hover
     info = L.control();
+    L.control.locate().addTo(map);
 
     info.onAdd = function (map) {
         this._div = L.DomUtil.create('div', 'info');
-        this.update();
+        // this.update();
         return this._div;
     };
 
-    info.update = function (props) {
-        this._div.innerHTML = (props ? '<h4>' + props.id : 'YO');
-    };
+    // info.update = function (props) {
+    //     this._div.innerHTML = (props ? '<h4>' + props.id : 'YO');
+    // };
 
     info.addTo(map);
 
-    //Add funky new Mozilla themed MapBox tiles
-    var tiles = new L.TileLayer('http://d.tiles.mapbox.com/v3/mozilla-webprod.e91ef8b3/{z}/{x}/{y}.png', {
+	var tiles = new L.TileLayer('https://api.tiles.mapbox.com/v4/base.live-land-tr+0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00,base.live-landuse-tr+0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00,base.mapbox-streets+bg-e8e0d8_scale-1_water-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_streets-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_landuse-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00_buildings-0.00x1.00;0.00x1.00;0.00x1.00;0.00x1.00/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IlhHVkZmaW8ifQ.hAMX5hSW-QnTeRCMAy9A8Q&update=hxjp2', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
         maxZoom: 14,
-        opacity: 0.65
+        opacity: 0.75
     });
 
     //Add the tiled map layer to the map
@@ -139,20 +141,23 @@ function init() {
         return new Array( num + 1 ).join( this );
     }
 
+	markers = new L.MarkerClusterGroup();	
+	
     function readcsv(obj) {
         var filename = obj.filename;
         var imagename = obj.imagename;
         var color = obj.color;
         var radius = obj.radius;
-        var pnts = L.geoJson(null, {
-            onEachFeature: onEachFeature,
+		var pnts = L.geoJson(null, {
+            onEachFeature: function(feature, layer) {
+				markers.addLayer(layer);
+			},
             
             pointToLayer: function (feature, latlng) {
 
                 var showdeath_max = 33;
                 var showinjuries_max = 30;
                 var showhomes_max = 16;
-
                 console.log(feature.properties);
                 var icon_img = '<img src="images/' + imagename + '.png">';
                 var icon_class = imagename;
@@ -163,15 +168,16 @@ function init() {
                 var injuries_num = feature.properties.injuries;
                 var homes_num = feature.properties.homes_destroyed;
                 var dollars_lost = feature.properties.cost_2011_text;
+                var sub_type = feature.properties.sub_type;
 
 
                 var death_icons = '<span class="icon death"></span>'.repeat(Math.min(death_num,showdeath_max));
                 var injuries_icons = '<span class="icon injury"></span>'.repeat(Math.min(injuries_num,showinjuries_max));
                 var homes_icons = '<span class="icon home"></span>'.repeat(Math.min(homes_num,showhomes_max));
 
-                if (death_num > showdeath_max) { death_icons += '<span class="more">...</span>'; }
-                if (injuries_num > showinjuries_max) { injuries_icons += '<span class="more">...</span>'; }
-                if (homes_num > showhomes_max) { homes_icons += '<span class="more">...</span>'; }
+                if (death_num > showdeath_max) { death_icons += '<span class="more">&#8230</span>'; }
+                if (injuries_num > showinjuries_max) { injuries_icons += '<span class="more">&#8230</span>'; }
+                if (homes_num > showhomes_max) { homes_icons += '<span class="more">&#8230</span>'; }
 
                 death_icons = '<span class="value">' + death_icons + '</span>';
                 injuries_icons = '<span class="value">' + injuries_icons + '</span>';
@@ -183,6 +189,7 @@ function init() {
                     lost_row = '',
                     desc_row = '';
                 var title_html = '<h3>' + name + '</h3>';
+                var type_html = '<p class="sub">' + sub_type + '</p>';
                 if ((typeof death_num != undefined) && (death_num > 0)) {
                     death_row = '<p class="row death"><span class="label">Deaths</span>' + death_icons + '<span class="num">' + death_num + '</span></p>';
                 }
@@ -192,17 +199,17 @@ function init() {
                 if ((typeof homes_num != undefined) && (homes_num > 0)) {
                     homes_row = '<p class="row homes"><span class="label">Home Destroyed</span>' + homes_icons + '<span class="num">' + homes_num + '</span></p>';
                 }
-                if ((typeof dollars_lost != undefined) && (dollars_lost)) {
+                if ((typeof dollars_lost != undefined) && (dollars_lost != 'Not known')) {
                     lost_row = '<p class="row lost"><span class="label">Impact in Dollars</span><span class="value">' + dollars_lost + '</span></p>';
                 }
                 desc_row = '<p class="row description">' + description + ' <a target="_blank" href="' + link + '">more</a></p>'
                 var close_button = '<span class="close"></span>';
 
-                var popup_content = title_html + death_row + injuries_row + homes_row + lost_row + desc_row + close_button;
+                var popup_content = type_html + title_html + death_row + injuries_row + homes_row + lost_row + desc_row + close_button;
 
                 var myicon = L.divIcon({
                     className: icon_class,
-                    html: icon_img
+                    html: '<h3>' + name + '</h3>' + icon_img + '<p class="death">' + death_num + ' Deaths</p>'
                 });
 
                 var marker = L.marker(latlng, {
@@ -237,13 +244,16 @@ function init() {
         }); 
 
         return {'marker':omnivore.csv(filename + '.csv', null, pnts), 'radius':omnivore.csv(filename + '.csv', null, radius_circle)};
-    }
-    
-    for(var i=0;i<pnts_layers.length;i++){
-        pnts_layers[i]['marker'].addTo(map);
+
     }
 
-
+	
+	map.addLayer(markers);
+		
+    // for(var i=0;i<pnts_layers.length;i++){
+        // pnts_layers[i]['marker'].addTo(map);
+    // }
+	
     // for(var i=0;i<pnts_layers.length;i++){
     //     pnts_layers[i]['radius'].addTo(map);
     // }
@@ -384,17 +394,17 @@ function init() {
 
 
 function onEachFeature(feature, layer) {
-    layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        click: function (e) {
-            if (currTarget) {
-                resetHighlight(currTarget); //reset previously clicked postcode
-            }
-            currTarget = e;
-            highlightFeature(e);
-        }
-    });
+    // layer.on({
+    //     mouseover: highlightFeature,
+    //     mouseout: resetHighlight,
+    //     click: function (e) {
+    //         if (currTarget) {
+    //             resetHighlight(currTarget); //reset previously clicked postcode
+    //         }
+    //         currTarget = e;
+    //         highlightFeature(e);
+    //     }
+    // });
 }
 
 

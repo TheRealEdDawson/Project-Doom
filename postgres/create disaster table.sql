@@ -170,6 +170,9 @@ update aemkh_disasters
                     else replace(to_char(normalised_cost_2011::numeric(12,0)/1000000, '$999,999'), ' ', '') || 'm'
                   end;
 
+select max(normalised_cost_2011) from aemkh_disasters;
+
+
 
 --COPY aemkh_disasters TO 'C:\minus34\GitHub\Project-Doom\hstestcode/doom_stats.csv' HEADER CSV;
 

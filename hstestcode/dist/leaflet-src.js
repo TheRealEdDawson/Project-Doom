@@ -3748,7 +3748,7 @@ L.Marker = L.Class.extend({
 		// TODO proper custom event propagation
 		// this line will always be called if marker is in a FeatureGroup
 		if (e.type === 'contextmenu' && this.hasEventListeners(e.type)) {
-			L.DomEvent.preventDefault(e);
+			// L.DomEvent.preventDefault(e);
 		}
 		if (e.type !== 'mousedown') {
 			L.DomEvent.stopPropagation(e);
@@ -4755,7 +4755,7 @@ L.Path = L.Path.extend({
 		});
 
 		if (e.type === 'contextmenu') {
-			//L.DomEvent.preventDefault(e);
+			// L.DomEvent.preventDefault(e);
 		}
 		if (e.type !== 'mousemove') {
 			L.DomEvent.stopPropagation(e);
