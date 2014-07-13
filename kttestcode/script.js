@@ -154,7 +154,7 @@ function init() {
                 var showhomes_max = 16;
 
                 console.log(feature.properties);
-                var icon_img = '<img src="images/' + imagename + '">';
+                var icon_img = '<img src="images/' + imagename + '.png">';
                 var icon_class = imagename;
                 var name = feature.properties.name;
                 var description = feature.properties.description.substring(0, 150) + '...';
