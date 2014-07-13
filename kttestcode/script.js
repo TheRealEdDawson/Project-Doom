@@ -149,19 +149,20 @@ function init() {
             
             pointToLayer: function (feature, latlng) {
 
-                var showdeath_max = 35;
+                var showdeath_max = 33;
                 var showinjuries_max = 30;
                 var showhomes_max = 16;
 
+                console.log(feature.properties);
                 var icon_img = '<img src="images/' + imagename + '">';
                 var icon_class = imagename;
-                var name = 'Example name';
-                var description = 'Donec id elit non mi porta gravida at eget metus. Donec sed odio dui.';
-                var link = "http://google.com.au";
-                var death_num = 35;
-                var injuries_num = 35;
-                var homes_num = 15;
-                var dollars_lost = '$13,000';
+                var name = feature.properties.name;
+                var description = feature.properties.description.substring(0, 150) + '...';
+                var link = feature.properties.url;
+                var death_num = feature.properties.deaths;
+                var injuries_num = feature.properties.injuries;
+                var homes_num = feature.properties.homes_destroyed;
+                var dollars_lost = feature.properties.cost_2011_text;
 
 
                 var death_icons = '<span class="icon death"></span>'.repeat(Math.min(death_num,showdeath_max));
@@ -176,12 +177,25 @@ function init() {
                 injuries_icons = '<span class="value">' + injuries_icons + '</span>';
                 homes_icons = '<span class="value">' + homes_icons + '</span>';
 
+                var death_row = '',
+                    injuries_row = '',
+                    homes_row = '',
+                    lost_row = '',
+                    desc_row = '';
                 var title_html = '<h3>' + name + '</h3>';
-                var death_row = '<p class="row death"><span class="label">Death</span>' + death_icons + '<span class="num">' + death_num + '</span></p>';
-                var injuries_row = '<p class="row injuries"><span class="label">injuries</span>' + injuries_icons + '<span class="num">' + injuries_num + '</span></p>';
-                var homes_row = '<p class="row homes"><span class="label">Home Destroyed</span>' + homes_icons + '<span class="num">' + homes_num + '</span></p>';
-                var lost_row = '<p class="row lost"><span class="label">Lost in Dollars</span><span class="value">' + dollars_lost + '</span></p>';
-                var desc_row = '<p class="row description">' + description + ' <a href="' + link + '">more</a></p>'
+                if ((typeof death_num != undefined) && (death_num > 0)) {
+                    death_row = '<p class="row death"><span class="label">Deaths</span>' + death_icons + '<span class="num">' + death_num + '</span></p>';
+                }
+                if ((typeof injuries_num != undefined) && (injuries_num > 0)) {
+                    injuries_row = '<p class="row injuries"><span class="label">injuries</span>' + injuries_icons + '<span class="num">' + injuries_num + '</span></p>';
+                }
+                if ((typeof homes_num != undefined) && (homes_num > 0)) {
+                    homes_row = '<p class="row homes"><span class="label">Home Destroyed</span>' + homes_icons + '<span class="num">' + homes_num + '</span></p>';
+                }
+                if ((typeof dollars_lost != undefined) && (dollars_lost)) {
+                    lost_row = '<p class="row lost"><span class="label">Impact in Dollars</span><span class="value">' + dollars_lost + '</span></p>';
+                }
+                desc_row = '<p class="row description">' + description + ' <a target="_blank" href="' + link + '">more</a></p>'
                 var close_button = '<span class="close"></span>';
 
                 var popup_content = title_html + death_row + injuries_row + homes_row + lost_row + desc_row + close_button;
@@ -230,9 +244,9 @@ function init() {
     }
 
 
-    for(var i=0;i<pnts_layers.length;i++){
-        pnts_layers[i]['radius'].addTo(map);
-    }
+    // for(var i=0;i<pnts_layers.length;i++){
+    //     pnts_layers[i]['radius'].addTo(map);
+    // }
 
 
     // Replace with user driven action
@@ -409,9 +423,11 @@ $(function() {
     });
     $('#map_filter [level=child]').change(function() {
         if ($(this).is(":checked")) {
+            $('.' + $(this).val()).show();
             console.log('show ' + $(this).val() + ' layer');
         } else {
             console.log('hide ' + $(this).val() + ' layer');
+            $('.' + $(this).val()).hide();
         }
     });
     $('#map_filter .exp').click(function() {
