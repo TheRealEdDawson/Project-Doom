@@ -36,88 +36,7 @@ function init() {
         this._div.innerHTML = (props ? '<h4>' + props.id : 'YO');
     };
 
-    // info.update = function (props) {
-        // this._div.innerHTML = (props ? '<h4>' + props.suburbs + ' VIC ' + props.id.replace("POA", "") +
-            // '</h4>Water/person/day <b>' + parseInt(props.l_pp_day_2009).toString() + ' L</b><br/>' +
-            // '</h4>Water/household/day <b>' + parseInt(props.l_hh_day_2009).toString() + ' L</b><br/>' +
-            // '</h4>Avg people per HH <b>' + props.hh_avg_size.toString() + '</b><br/>' +
-            // '</h4>HH Median income <b>$' + props.hh_med_income.toString() + '</b><br/>' +
-            // '</h4>Household count <b>' + props.hh_count.toString() + '</b><br/>' +
-            // '</h4>Households/sq km <b>' + parseInt(props.hh_density.toString()).toString() + '</b><br/>'
-            // : 'Select a postcode');
-    // };
-
     info.addTo(map);
-    
-    // //Create a legend control
-    // legend = L.control({ position: 'bottomright' });
-
-    // legend.onAdd = function (map) {
-
-        // var div = L.DomUtil.create('div', 'info legend'),
-            // grades = themeGrades,
-            // labels = [],
-            // from, to;
-
-        // for (var i = 0; i < grades.length; i++) {
-            // from = grades[i];
-            // to = grades[i + 1];
-
-            // labels.push(
-                // '<i style="background:' + getColor(from + 1) + '"></i> ' +
-                // from + (to ? '&ndash;' + to : '+'));
-        // }
-
-        // div.innerHTML = "<h4>Daily water use</h4>" +
-                        // "<h4><select id='selectStat' class='dropdown'>" +
-                           // "<option value='person'>per person</option>" +
-                           // "<option value='household'>per household</option>" +
-                        // "</select></h4>" +
-                        // "<div id='mapLegend'>" + labels.join('<br/>') + '</div>';
-        // return div;
-    // };
-
-    // legend.addTo(map);
-
-    // //Change map theme when legend dropdown changes
-    // $('#selectStat').change(function () {
-        // var selection = this.value;
-
-        // switch(selection)
-        // {
-            // case "person":
-                // currStat = "l_pp_day_2009";
-                // themeGrades = [0, 50, 100, 150, 200, 250, 300, 350];
-                // break;
-            // case "household":
-                // currStat = "l_hh_day_2009";
-                // themeGrades = [0, 100, 200, 300, 400, 500, 600, 700];
-                // break;
-            // default:
-                // currStat = "l_pp_day_2009";
-                // themeGrades = [0, 50, 100, 150, 200, 250, 300, 350];
-        // }
-
-        // //Display the boundaries
-        // loadGeoJson(json);
-
-        // //Update the legend
-        // labels = []
-
-        // for (var i = 0; i < themeGrades.length; i++) {
-            // from = themeGrades[i];
-            // to = themeGrades[i + 1];
-
-            // labels.push(
-                // '<i style="background:' + getColor(from + 1) + '"></i> ' +
-                // from + (to ? '&ndash;' + to : '+'));
-        // }
-
-        // var data = labels.join('<br/>');
-
-        // $("#mapLegend").hide().html(data).fadeIn('fast');
-
-    // });
 
     //Add funky new Mozilla themed MapBox tiles
     var tiles = new L.TileLayer('http://d.tiles.mapbox.com/v3/mozilla-webprod.e91ef8b3/{z}/{x}/{y}.png', {
@@ -128,40 +47,107 @@ function init() {
 
     //Add the tiled map layer to the map
     map.addLayer(tiles);
-    
-	// var customLayer = L.geoJson(null, {
-		// onEachFeature: onEachFeature,
-		
-		// pointToLayer: function (feature, latlng) {
-			// return L.circleMarker(latlng, {
-				// radius: 8,
-				// fillColor: "#ff7800",
-				// color: "#000",
-				// weight: 1,
-				// opacity: 1,
-				// fillOpacity: 0.8
-			// });
-		// }
-	// });	
-
+   
 	var customLayer = L.geoJson(null, {	onEachFeature: onEachFeature });	
 	
-	//Load the disasters into their own layer
-	layerAir = omnivore.csv('pntsAir.csv', null, customLayer).addTo(map);
-	layerBushfire = omnivore.csv('pntsBushfire.csv', null, customLayer).addTo(map);
-	layerCyclone = omnivore.csv('pntsCyclone.csv', null, customLayer).addTo(map);
-	layerEarthquake = omnivore.csv('pntsEarthquake.csv', null, customLayer).addTo(map);
-	layerFire = omnivore.csv('pntsFire.csv', null, customLayer).addTo(map);
-	layerFlood = omnivore.csv('pntsFlood.csv', null, customLayer).addTo(map);
-	layerHeatwave = omnivore.csv('pntsHeatwave.csv', null, customLayer).addTo(map);
-	layerIndustrial = omnivore.csv('pntsIndustrial.csv', null, customLayer).addTo(map);
-	layerLandslide = omnivore.csv('pntsLandslide.csv', null, customLayer).addTo(map);
-	layerRail = omnivore.csv('pntsRail.csv', null, customLayer).addTo(map);
-	layerRiptide = omnivore.csv('pntsRiptide.csv', null, customLayer).addTo(map);
-	layerRoad = omnivore.csv('pntsRoad.csv', null, customLayer).addTo(map);
-	layerStormHail = omnivore.csv('pntsStormHail.csv', null, customLayer).addTo(map);
-	layerWater = omnivore.csv('pntsWater.csv', null, customLayer).addTo(map);
+	// //Load the disasters into their own layer
+	// layerAir = omnivore.csv('pntsAir.csv', null, customLayer).addTo(map);
+	// layerBushfire = omnivore.csv('pntsBushfire.csv', null, customLayer).addTo(map);
+	// layerCyclone = omnivore.csv('pntsCyclone.csv', null, customLayer).addTo(map);
+	// layerEarthquake = omnivore.csv('pntsEarthquake.csv', null, customLayer).addTo(map);
+	// layerFire = omnivore.csv('pntsFire.csv', null, customLayer).addTo(map);
+	// layerFlood = omnivore.csv('pntsFlood.csv', null, customLayer).addTo(map);
+	// layerHeatwave = omnivore.csv('pntsHeatwave.csv', null, customLayer).addTo(map);
+	// layerIndustrial = omnivore.csv('pntsIndustrial.csv', null, customLayer).addTo(map);
+	// layerLandslide = omnivore.csv('pntsLandslide.csv', null, customLayer).addTo(map);
+	// layerRail = omnivore.csv('pntsRail.csv', null, customLayer).addTo(map);
+	// layerRiptide = omnivore.csv('pntsRiptide.csv', null, customLayer).addTo(map);
+	// layerRoad = omnivore.csv('pntsRoad.csv', null, customLayer).addTo(map);
+	// layerStormHail = omnivore.csv('pntsStormHail.csv', null, customLayer).addTo(map);
+	// layerWater = omnivore.csv('pntsWater.csv', null, customLayer).addTo(map);
 
+	
+	var pntsAir = L.geoJson(null, {
+		onEachFeature: onEachFeature,
+		
+		pointToLayer: function (feature, latlng) {
+            var myicon = L.divIcon({ className: 'icon_transport_air', html: '<img src="images/icon_transport_air.png">' });
+			return L.marker(latlng, { icon: myicon });
+		}
+	});
+	
+	layerAir = omnivore.csv('pntsAir.csv', null, pntsAir).addTo(map);
+	
+	
+	
+	// //Create Icons
+	// var iconAir.setIcon('images/icon_transport_air.png');
+	// var iconBushfire.setIcon('images/icon_natural_bushfire.png');
+	// var iconCyclone.setIcon('images/icon_natural_cyclone.png');
+	// var iconEarthquake.setIcon('images/icon_natural_earthquake.png');
+	// var iconFire.setIcon('images/icon_manmade_fire.png');
+	// var iconFlood.setIcon('images/icon_natural_flood.png');
+	// var iconHeatwave.setIcon('images/icon_natural_heatwave.png');
+	// var iconIndustrial.setIcon('images/icon_manmade_industrial.png');
+	// var iconLandslide.setIcon('images/icon_natural_landslide.png');
+	// var iconRail.setIcon('images/icon_transport_rail.png');
+	// var iconRiptide.setIcon('images/icon_natural_riptide.png');
+	// var iconRoad.setIcon('images/icon_transport_road.png');
+	// var iconStormHail.setIcon('images/icon_natural_storm.png');
+	// var iconWater.setIcon('images/icon_transport_water.png');
+	
+	
+	
+	
+	// var customLayer = L.geoJson(null, {	onEachFeature: onEachFeature });	
+	
+	
+	// //Load the disasters into their own layer
+	// layerAir = omnivore.csv('pntsAir.csv', null, customLayer);
+	// layerBushfire = omnivore.csv('pntsBushfire.csv', null, customLayer);
+	// layerCyclone = omnivore.csv('pntsCyclone.csv', null, customLayer);
+	// layerEarthquake = omnivore.csv('pntsEarthquake.csv', null, customLayer);
+	// layerFire = omnivore.csv('pntsFire.csv', null, customLayer);
+	// layerFlood = omnivore.csv('pntsFlood.csv', null, customLayer);
+	// layerHeatwave = omnivore.csv('pntsHeatwave.csv', null, customLayer);
+	// layerIndustrial = omnivore.csv('pntsIndustrial.csv', null, customLayer);
+	// layerLandslide = omnivore.csv('pntsLandslide.csv', null, customLayer);
+	// layerRail = omnivore.csv('pntsRail.csv', null, customLayer);
+	// layerRiptide = omnivore.csv('pntsRiptide.csv', null, customLayer);
+	// layerRoad = omnivore.csv('pntsRoad.csv', null, customLayer);
+	// layerStormHail = omnivore.csv('pntsStormHail.csv', null, customLayer);
+	// layerWater = omnivore.csv('pntsWater.csv', null, customLayer);
+
+
+	// layerAir.setIcon('images/icon_transport_air.png');
+	// layerBushfire.setIcon('images/icon_natural_bushfire.png');
+	// layerCyclone.setIcon('images/icon_natural_cyclone.png');
+	// layerEarthquake.setIcon('images/icon_natural_earthquake.png');
+	// layerFire.setIcon('images/icon_manmade_fire.png');
+	// layerFlood.setIcon('images/icon_natural_flood.png');
+	// layerHeatwave.setIcon('images/icon_natural_heatwave.png');
+	// layerIndustrial.setIcon('images/icon_manmade_industrial.png');
+	// layerLandslide.setIcon('images/icon_natural_landslide.png');
+	// layerRail.setIcon('images/icon_transport_rail.png');
+	// layerRiptide.setIcon('images/icon_natural_riptide.png');
+	// layerRoad.setIcon('images/icon_transport_road.png');
+	// layerStormHail.setIcon('images/icon_natural_storm.png');
+	// layerWater.setIcon('images/icon_transport_water.png');
+	
+	// layerAir.addTo(map);
+	// layerBushfire.addTo(map);
+	// layerCyclone.addTo(map);
+	// layerEarthquake.addTo(map);
+	// layerFire.addTo(map);
+	// layerFlood.addTo(map);
+	// layerHeatwave.addTo(map);
+	// layerIndustrial.addTo(map);
+	// layerLandslide.addTo(map);
+	// layerRail.addTo(map);
+	// layerRiptide.addTo(map);
+	// layerRoad.addTo(map);
+	// layerStormHail.addTo(map);
+	// layerWater.addTo(map);
 	
 	// layerAir
 	// layerBushfire
@@ -177,6 +163,9 @@ function init() {
 	// layerRoad
 	// layerStormHail
 	// layerWater
+
+
+
 
 	
 	//map.addLayer(geojsonLayer);
