@@ -184,4 +184,8 @@ only screen and (min-resolution: 144dpi)
 
 	.map_filter label[data-type=manmade_fire]:after { background-image: url(../images/icon_manmade_fire@2x.png); }
 	.map_filter label[data-type=manmade_industrial]:after { background-image: url(../images/icon_manmade_industrial@2x.png); }
+
+	.leaflet-popup-content-wrapper .icon.death { background-size: 8px 22px; background-image: url(../images/icon_death@2x.png); }
+	.leaflet-popup-content-wrapper .icon.injury { background-size: 8px 22px; background-image: url(../images/icon_injury@2x.png); }
+	.leaflet-popup-content-wrapper .icon.home { background-size: 16px 15px; background-image: url(../images/icon_home@2x.png); }
 }
