@@ -180,6 +180,7 @@ function init() {
                 var homes_num = feature.properties.homes_destroyed;
                 var dollars_lost = feature.properties.cost_2011_text;
                 var sub_type = feature.properties.sub_type;
+                var year = feature.properties.year;
 
 
                 var death_icons = '<span class="icon death"></span>'.repeat(Math.min(death_num,showdeath_max));
@@ -200,7 +201,8 @@ function init() {
                     lost_row = '',
                     desc_row = '';
                 var title_html = '<h3>' + name + '</h3>';
-                var type_html = '<p class="sub">' + sub_type + '</p>';
+                if (year == '') { year = 'Unknown'; }
+                var type_html = '<p class="sub">' + sub_type + ' / ' + year + ' </p>';
                 if ((typeof death_num != undefined) && (death_num > 0)) {
                     death_row = '<p class="row death"><span class="label">Deaths</span>' + death_icons + '<span class="num">' + death_num + '</span></p>';
                 }
