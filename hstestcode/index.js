@@ -3,20 +3,7 @@ var info;
 //var legend;
 var startZoom = 5;
 //var geojsonLayer;
-var layerAir;
-var layerBushfire;
-var layerCyclone;
-var layerEarthquake;
-var layerFire;
-var layerFlood;
-var layerHeatwave;
-var layerIndustrial;
-var layerLandslide;
-var layerRail;
-var layerRiptide;
-var layerRoad;
-var layerStormHail;
-var layerWater;
+
 
 
 function init() {
@@ -67,163 +54,20 @@ function init() {
 	// layerWater = omnivore.csv('pntsWater.csv', null, customLayer).addTo(map);
 
 	
-	var pntsAir = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_transport_air', html: '<img src="images/icon_transport_air.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerAir = omnivore.csv('pntsAir.csv', null, pntsAir).addTo(map);
-	
-	var pntsBushfire = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_natural_bushfire', html: '<img src="images/icon_natural_bushfire.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerBushfire = omnivore.csv('pntsBushfire.csv', null, pntsBushfire).addTo(map);
-	
-	
-	var pntsCyclone = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_natural_cyclone', html: '<img src="images/icon_natural_cyclone.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerCyclone = omnivore.csv('pntsCyclone.csv', null, pntsCyclone).addTo(map);
-	
-	var pntsEarthquake = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_natural_earthquake', html: '<img src="images/icon_natural_earthquake.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerEarthquake = omnivore.csv('pntsEarthquake.csv', null, pntsEarthquake).addTo(map);
-	
-	var pntsFire = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_manmade_fire', html: '<img src="images/icon_manmade_fire.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerFire = omnivore.csv('pntsFire.csv', null, pntsFire).addTo(map);
-
-	var pntsFlood = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_natural_flood', html: '<img src="images/icon_natural_flood.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerFlood = omnivore.csv('pntsFlood.csv', null, pntsFlood).addTo(map);
-
-	var pntsHeatwave = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_natural_heatwave', html: '<img src="images/icon_natural_heatwave.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerHeatwave = omnivore.csv('pntsHeatwave.csv', null, pntsHeatwave).addTo(map);
-
-	var pntsIndustrial = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_manmade_industrial', html: '<img src="images/icon_manmade_industrial.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerIndustrial = omnivore.csv('pntsIndustrial.csv', null, pntsIndustrial).addTo(map);
-
-	var pntsLandslide = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_natural_landslide', html: '<img src="images/icon_natural_landslide.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerLandslide = omnivore.csv('pntsLandslide.csv', null, pntsLandslide).addTo(map);
-
-	var pntsRail = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_transport_rail', html: '<img src="images/icon_transport_rail.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerRail = omnivore.csv('pntsRail.csv', null, pntsRail).addTo(map);
-
-	var pntsRiptide = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_natural_riptide', html: '<img src="images/icon_natural_riptide.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerRiptide = omnivore.csv('pntsRiptide.csv', null, pntsRiptide).addTo(map);
-
-	var pntsRoad = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_transport_road', html: '<img src="images/icon_transport_road.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerRoad = omnivore.csv('pntsRoad.csv', null, pntsRoad).addTo(map);
-
-	var pntsStormHail = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_natural_storm', html: '<img src="images/icon_natural_storm.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerStormHail = omnivore.csv('pntsStormHail.csv', null, pntsStormHail).addTo(map);
-
-	var pntsWater = L.geoJson(null, {
-		onEachFeature: onEachFeature,
-		
-		pointToLayer: function (feature, latlng) {
-            var myicon = L.divIcon({ className: 'icon_transport_water', html: '<img src="images/icon_transport_water.png">' });
-			return L.marker(latlng, { icon: myicon });
-		}
-	});
-	layerWater = omnivore.csv('pntsWater.csv', null, pntsWater).addTo(map);
-
-	
-	
-	// layerAir.addTo(map);
-	// layerBushfire.addTo(map);
-	// layerCyclone.addTo(map);
-	// layerEarthquake.addTo(map);
-	// layerFire.addTo(map);
-	// layerFlood.addTo(map);
-	// layerHeatwave.addTo(map);
-	// layerIndustrial.addTo(map);
-	// layerLandslide.addTo(map);
-	// layerRail.addTo(map);
-	// layerRiptide.addTo(map);
-	// layerRoad.addTo(map);
-	// layerStormHail.addTo(map);
-	// layerWater.addTo(map);
+	layerAir.addTo(map);
+	layerBushfire.addTo(map);
+	layerCyclone.addTo(map);
+	layerEarthquake.addTo(map);
+	layerFire.addTo(map);
+	layerFlood.addTo(map);
+	layerHeatwave.addTo(map);
+	layerIndustrial.addTo(map);
+	layerLandslide.addTo(map);
+	layerRail.addTo(map);
+	layerRiptide.addTo(map);
+	layerRoad.addTo(map);
+	layerStormHail.addTo(map);
+	layerWater.addTo(map);
 	
 	// layerAir
 	// layerBushfire
