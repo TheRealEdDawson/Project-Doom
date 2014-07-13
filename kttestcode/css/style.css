@@ -80,8 +80,8 @@ html,body { padding: 0; margin: 0; font-size: 100%; }
 [data-zoom="4"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
 [data-zoom="5"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
 [data-zoom="6"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
-[data-zoom="7"] .leaflet-marker-icon { font-size: 0.6em; }
-[data-zoom="8"] .leaflet-marker-icon { font-size: 0.65em; }
+[data-zoom="7"] .leaflet-marker-icon { font-size: 0.6em; opacity: 0.8; }
+[data-zoom="8"] .leaflet-marker-icon { font-size: 0.65em; opacity: 0.8; }
 [data-zoom="9"] .leaflet-marker-icon { font-size: 0.75em; }
 [data-zoom="10"] .leaflet-marker-icon { font-size: 0.8em; }
 [data-zoom="11"] .leaflet-marker-icon { font-size: 0.86em; }
