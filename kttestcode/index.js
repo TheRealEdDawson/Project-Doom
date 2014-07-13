@@ -155,7 +155,10 @@ function init() {
     
     map.addLayer(geojsonLayer);
 
-
+    String.prototype.repeat = function( num )
+    {
+        return new Array( num + 1 ).join( this );
+    }
 
 	var markerLayer = L.geoJson(null, {
 		onEachFeature: onEachFeature,
@@ -163,14 +166,51 @@ function init() {
 		pointToLayer: function (feature, latlng) {
 
             // var myicon = new L.Icon({iconUrl: 'dist/images/fire_circle.png'});
+
+            var showdeath_max = 10;
+            var showinjuries_max = 10;
+            var showhomes_max = 10;
+
+            var icon_img = '<img src="images/icon_manmade_fire.png">';
+            var name = 'Example name';
+            var description = 'Donec id elit non mi porta gravida at eget metus. Donec sed odio dui.';
+            var link = "http://google.com.au";
+            var death_num = 5;
+            var injuries_num = 5;
+            var homes_num = 15;
+            var dollars_lost = 13000;
+
+
+            var death_icons = '<span class="icon death"></span>'.repeat(Math.max(death_num,showdeath_max));
+            var injuries_icons = '<span class="icon death"></span>'.repeat(Math.max(injuries_num,showinjuries_max));
+            var homes_icons = '<span class="icon death"></span>'.repeat(Math.max(homes_num,showhomes_max));
+
+            if (death_num > showdeath_max) { death_icons += '<span class="more">...</span>'; }
+            if (injuries_num > showinjuries_max) { injuries_icons += '<span class="more">...</span>'; }
+            if (homes_num > showhomes_max) { homes_icons += '<span class="more">...</span>'; }
+
+            var title_html = '<h3>' + name + '</h3>';
+            var death_row = '<p class="row"><span class="label">Death</span>' + death_icons + '<span class="num">' + death_num + '</span></p>';
+            var injuries_row = '<p class="row"><span class="label">injuries</span>' + injuries_icons + '<span class="num">' + injuries_num + '</span></p>';
+            var homes_row = '<p class="row"><span class="label">Home Destroyed</span>' + homes_icons + '<span class="num">' + homes_num + '</span></p>';
+            var lost_row = '<p class="row"><span class="label">Lost in Dollars</span><span class="num">' + 13000 + '</span></p>';
+            var desc_row = '<p class="row description">' + description + ' <a href="' + link + '">more</a></p>'
+            var close_button = '<span class="close"></span>';
+
+            var popup_content = title_html + death_row + injuries_row + homes_row + lost_row + desc_row + close_button;
+
             var myicon = L.divIcon({
                 className: 'icon_manmade_fire',
-                html: '<img src="images/icon_manmade_fire.png">'
+                html: icon_img
             });
 
-			return L.marker(latlng, {
-				icon: myicon
-			});
+            var marker = L.marker(latlng, {
+                icon: myicon
+            });
+
+            marker.bindPopup(popup_content).openPopup();
+
+			return marker;
 		}
 	});	
 	
@@ -292,11 +332,8 @@ function onEachFeature(feature, layer) {
         // mouseover: highlightFeature,
         // mouseout: resetHighlight,
         click: function (e) {
-            if (currTarget) {
-                resetHighlight(currTarget); //reset previously clicked postcode
-            }
-            currTarget = e;
-            highlightFeature(e);
+            console.log(e.target);
+            // $(e.target).addClass('showpop');
         }
     });
 }

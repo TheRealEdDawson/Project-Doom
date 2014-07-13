@@ -13,6 +13,8 @@ html,body { padding: 0; margin: 0; }
 .map_filter li ul { overflow: hidden; max-height: 0; -webkit-transition: all .2s; -moz-transition: all .2s; -o-transition: all .2s; transition: all .2s; }
 .map_filter li.expand ul { max-height: 10000px; }
 
+.marker_popup { display: none; }
+
 
 /*.map_filter li li { margin: 0 -20px; }*/
 /*.icon_manmade_fire { display: block; width: 32px !important; height: 32px !important; margin: -16px 0 0 -16px !important; background: url(../images/icon_manmade_fire.png) no-repeat 50% 50%; background-size: 100% 100%; }*/
