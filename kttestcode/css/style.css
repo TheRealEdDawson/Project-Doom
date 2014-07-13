@@ -73,13 +73,13 @@ html,body { padding: 0; margin: 0; font-size: 100%; }
 .leaflet-marker-icon.icon_natural h3, .leaflet-marker-icon.icon_natural .death { color: #18a762; }
 .leaflet-marker-icon.icon_manmade h3, .leaflet-marker-icon.icon_manmade .death { color: #e30202; }
 */
-[data-zoom="0"] .leaflet-marker-icon { font-size: 0.2em; }
-[data-zoom="1"] .leaflet-marker-icon { font-size: 0.2em; }
-[data-zoom="2"] .leaflet-marker-icon { font-size: 0.2em; }
-[data-zoom="3"] .leaflet-marker-icon { font-size: 0.2em; }
-[data-zoom="4"] .leaflet-marker-icon { font-size: 0.2em; }
-[data-zoom="5"] .leaflet-marker-icon { font-size: 0.3em; }
-[data-zoom="6"] .leaflet-marker-icon { font-size: 0.4em; }
+[data-zoom="0"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
+[data-zoom="1"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
+[data-zoom="2"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
+[data-zoom="3"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
+[data-zoom="4"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
+[data-zoom="5"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
+[data-zoom="6"] .leaflet-marker-icon { font-size: 0.45em; opacity: 0.8; }
 [data-zoom="7"] .leaflet-marker-icon { font-size: 0.6em; }
 [data-zoom="8"] .leaflet-marker-icon { font-size: 0.65em; }
 [data-zoom="9"] .leaflet-marker-icon { font-size: 0.75em; }
@@ -90,56 +90,9 @@ html,body { padding: 0; margin: 0; font-size: 100%; }
 [data-zoom="14"] .leaflet-marker-icon { font-size: 0.98em; }
 [data-zoom="15"] .leaflet-marker-icon { font-size: 1em; }
 
-/*[data-zoom="0"] .leaflet-marker-icon,
-[data-zoom="1"] .leaflet-marker-icon,
-[data-zoom="2"] .leaflet-marker-icon,
-[data-zoom="3"] .leaflet-marker-icon,
-[data-zoom="4"] .leaflet-marker-icon,
-[data-zoom="5"] .leaflet-marker-icon {
-	width: 8px !important; height: 8px !important;
-	margin: -4px 0 0 -4px !important;
-	font-size: 0.5em;
+.leaflet-marker-icon:hover {
+	opacity: 1;
 }
-[data-zoom="6"] .leaflet-marker-icon,
-[data-zoom="7"] .leaflet-marker-icon,
-[data-zoom="8"] .leaflet-marker-icon {
-	width: 16px !important; height: 16px !important;
-	margin: -8px 0 0 -8px !important;
-	font-size: 0.6em;
-}
-[data-zoom="9"] .leaflet-marker-icon,
-[data-zoom="10"] .leaflet-marker-icon,
-[data-zoom="11"] .leaflet-marker-icon {
-	width: 24px !important; height: 24px !important;
-	margin: -12px 0 0 -12px !important;
-	font-size: 0.8em;
-}
-[data-zoom="12"] .leaflet-marker-icon,
-[data-zoom="13"] .leaflet-marker-icon,
-[data-zoom="14"] .leaflet-marker-icon,
-[data-zoom="15"] .leaflet-marker-icon {
-	width: 3em !important; height: 3em !important;
-	margin: -1.5em 0 0 -1.5em !important;
-	font-size: 1em;
-}*/
-/*
-[data-zoom="9"] .leaflet-marker-icon h3,
-[data-zoom="10"] .leaflet-marker-icon h3,
-[data-zoom="11"] .leaflet-marker-icon h3,
-[data-zoom="9"] .leaflet-marker-icon .death,
-[data-zoom="10"] .leaflet-marker-icon .death,
-[data-zoom="11"] .leaflet-marker-icon .death,
-[data-zoom="12"] .leaflet-marker-icon h3,
-[data-zoom="13"] .leaflet-marker-icon h3,
-[data-zoom="14"] .leaflet-marker-icon h3,
-[data-zoom="15"] .leaflet-marker-icon h3,
-[data-zoom="12"] .leaflet-marker-icon death,
-[data-zoom="13"] .leaflet-marker-icon death,
-[data-zoom="14"] .leaflet-marker-icon death,
-[data-zoom="15"] .leaflet-marker-icon death
-{
-	display: block;
-}*/
 .leaflet-marker-icon:hover h3,
 .leaflet-marker-icon:hover .death {
 	display: block;
