@@ -167,33 +167,37 @@ function init() {
 
             // var myicon = new L.Icon({iconUrl: 'dist/images/fire_circle.png'});
 
-            var showdeath_max = 10;
-            var showinjuries_max = 10;
-            var showhomes_max = 10;
+            var showdeath_max = 35;
+            var showinjuries_max = 30;
+            var showhomes_max = 16;
 
             var icon_img = '<img src="images/icon_manmade_fire.png">';
             var name = 'Example name';
             var description = 'Donec id elit non mi porta gravida at eget metus. Donec sed odio dui.';
             var link = "http://google.com.au";
-            var death_num = 5;
-            var injuries_num = 5;
+            var death_num = 35;
+            var injuries_num = 35;
             var homes_num = 15;
-            var dollars_lost = 13000;
+            var dollars_lost = '$13,000';
 
 
-            var death_icons = '<span class="icon death"></span>'.repeat(Math.max(death_num,showdeath_max));
-            var injuries_icons = '<span class="icon death"></span>'.repeat(Math.max(injuries_num,showinjuries_max));
-            var homes_icons = '<span class="icon death"></span>'.repeat(Math.max(homes_num,showhomes_max));
+            var death_icons = '<span class="icon death"></span>'.repeat(Math.min(death_num,showdeath_max));
+            var injuries_icons = '<span class="icon injury"></span>'.repeat(Math.min(injuries_num,showinjuries_max));
+            var homes_icons = '<span class="icon home"></span>'.repeat(Math.min(homes_num,showhomes_max));
 
             if (death_num > showdeath_max) { death_icons += '<span class="more">...</span>'; }
             if (injuries_num > showinjuries_max) { injuries_icons += '<span class="more">...</span>'; }
             if (homes_num > showhomes_max) { homes_icons += '<span class="more">...</span>'; }
 
+            death_icons = '<span class="value">' + death_icons + '</span>';
+            injuries_icons = '<span class="value">' + injuries_icons + '</span>';
+            homes_icons = '<span class="value">' + homes_icons + '</span>';
+
             var title_html = '<h3>' + name + '</h3>';
-            var death_row = '<p class="row"><span class="label">Death</span>' + death_icons + '<span class="num">' + death_num + '</span></p>';
-            var injuries_row = '<p class="row"><span class="label">injuries</span>' + injuries_icons + '<span class="num">' + injuries_num + '</span></p>';
-            var homes_row = '<p class="row"><span class="label">Home Destroyed</span>' + homes_icons + '<span class="num">' + homes_num + '</span></p>';
-            var lost_row = '<p class="row"><span class="label">Lost in Dollars</span><span class="num">' + 13000 + '</span></p>';
+            var death_row = '<p class="row death"><span class="label">Death</span>' + death_icons + '<span class="num">' + death_num + '</span></p>';
+            var injuries_row = '<p class="row injuries"><span class="label">injuries</span>' + injuries_icons + '<span class="num">' + injuries_num + '</span></p>';
+            var homes_row = '<p class="row homes"><span class="label">Home Destroyed</span>' + homes_icons + '<span class="num">' + homes_num + '</span></p>';
+            var lost_row = '<p class="row lost"><span class="label">Lost in Dollars</span><span class="value">' + dollars_lost + '</span></p>';
             var desc_row = '<p class="row description">' + description + ' <a href="' + link + '">more</a></p>'
             var close_button = '<span class="close"></span>';
 
@@ -257,9 +261,9 @@ function init() {
     map.setView(new L.LatLng(-28.3, 135.0), startZoom);
 
     //Acknowledge the data providers
-    map.attributionControl.addAttribution('Disaster data © <a href="http://www.ag.gov.au/Pages/Copyright.aspx">Attorney General\'s Department</a>');
-    map.attributionControl.addAttribution('<a href="http://www.insurancecouncil.com.au/industry-statistics-data/disaster-statistics/historical-disaster-statistics">Insurance Council of Australia</a>');
-
+    map.attributionControl.addAttribution('Disaster data © <a href="http://www.ag.gov.au/Pages/Copyright.aspx">Attorney General\'s Dept</a>');
+    map.attributionControl.addAttribution('<a href="http://www.insurancecouncil.com.au/industry-statistics-data/disaster-statistics/historical-disaster-statistics">Insurance Council of Aus</a>');
+    map.attributionControl.addAttribution('This work is licensed <a href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>');
 	
 	
     // //Load the boundaries

@@ -1,4 +1,4 @@
-html,body { padding: 0; margin: 0; }
+html,body { padding: 0; margin: 0; font-size: 100%; }
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 .leaflet-left { left: 200px; }
@@ -15,6 +15,24 @@ html,body { padding: 0; margin: 0; }
 
 .marker_popup { display: none; }
 
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: #dd1a17; color: #fff; box-shadow: none; }
+.leaflet-popup-content-wrapper { font-size: 1.1em;}
+.leaflet-popup-content-wrapper h3 { font-size: 1.5em; padding: 0; margin: 0 0 0.7em 0; }
+.leaflet-popup-content-wrapper .row { padding: 4px 0; margin: 0; position: relative; }
+.leaflet-popup-content-wrapper .row:after { content: ""; display: table; clear: both; }
+.leaflet-popup-content-wrapper .label { display: block; width: 70px; float: left; }
+.leaflet-popup-content-wrapper .value { display: block; width: 180px; float: left; }
+.leaflet-popup-content-wrapper .num { display: block; width: 40px; float: left; text-align: right; margin: 0 0 0 5px; font-weight: bold; font-size: 1.25em; }
+.leaflet-popup-content-wrapper .icon { display: inline-block; height: 22px; margin: 2px 1px; background-repeat: no-repeat; background-position: 50% 100%; }
+.leaflet-popup-content-wrapper .icon.death { height: 22px; width: 8px; background-image: url(../images/icon_death.png); }
+.leaflet-popup-content-wrapper .icon.injury { height: 22px; width: 8px; background-image: url(../images/icon_injury.png); }
+.leaflet-popup-content-wrapper .icon.home { height: 15px; width: 16px; background-image: url(../images/icon_home.png); }
+.leaflet-popup-content-wrapper .row.lost .value { font-size: 1.8em; font-weight: bold; }
+.leaflet-popup-content-wrapper .row.description { padding-top: 10px; margin-top: 10px; }
+.leaflet-popup-content-wrapper .row.description:before { content: ""; position: absolute; display: block; height: 1px; top: 0; left: 0; right: 0; background: #fff; opacity: 0.2; }
+.leaflet-popup-content-wrapper .row.description a { color: #fff; font-weight: bold; }
+
+.leaflet-container a.leaflet-popup-close-button { color: #fff; }
 
 /*.map_filter li li { margin: 0 -20px; }*/
 /*.icon_manmade_fire { display: block; width: 32px !important; height: 32px !important; margin: -16px 0 0 -16px !important; background: url(../images/icon_manmade_fire.png) no-repeat 50% 50%; background-size: 100% 100%; }*/
