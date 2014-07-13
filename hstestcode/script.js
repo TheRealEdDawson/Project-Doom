@@ -1,9 +1,9 @@
 var map;
-var info;
+//var info;
 //var legend;
 var startZoom = 5;
 //var geojsonLayer;
-
+var markers;
 
 
 function init() {
@@ -23,10 +23,11 @@ function init() {
    
    
 //Loads the data layers ready for adding to the map
-
+var clusterAir = new L.MarkerClusterGroup();
 var pntsAir = L.geoJson(null, {
-	onEachFeature: onEachFeature,
-	
+	onEachFeature: function (feature, layer) { 
+        clusterAir.addLayer(layer);
+    },
 	pointToLayer: function (feature, latlng) {
 		var myicon = L.divIcon({ className: 'icon_transport_air', html: '<img src="images/icon_transport_air.png">' });
 		return L.marker(latlng, { icon: myicon });
@@ -74,39 +75,6 @@ var pntsFire = L.geoJson(null, {
 	}
 });
 var layerFire = omnivore.csv('pntsFire.csv', null, pntsFire);
-
-
-
-
-
-// var pntsFlood
-
-// $.ajax({
-	// url: 'pntsFlood.csv',
-	// success: function (data) {
-		// var fred = $.csv.toArrays(data);
-		
-		// var geoJson = $.toJSON(fred);
-		
-		// pntsFlood = L.geoJson(geoJson, {
-			// onEachFeature: onEachFeature,
-			
-			// pointToLayer: function (feature, latlng) {
-				// var myicon = L.divIcon({ className: 'icon_natural_flood', html: '<img src="images/icon_natural_flood.png">' });
-				// return L.marker(latlng, { icon: myicon });
-			// }
-		// });
-		
-	// }
-// });
-
-
-// var geoLayer;
-
-// $.get('pntsFlood.csv', function(csvContents) {
-	// geoLayer = L.geoCsv(csvContents, {firstLineTitles: true, latitudeTitle: 'lat', longitudeTitle: 'long', fieldSeparator: ','});
-	// //map.addLayer(geoLayer);
-// });
 
 var pntsFlood = L.geoJson(null, {
 	onEachFeature: onEachFeature,
@@ -208,7 +176,7 @@ var layerWater = omnivore.csv('pntsWater.csv', null, pntsWater);
 	// layerCyclone.addTo(map);
 	// layerEarthquake.addTo(map);
 	// layerFire.addTo(map);
-	//layerFlood.addTo(map);
+	// layerFlood.addTo(map);
 	// layerHeatwave.addTo(map);
 	// layerIndustrial.addTo(map);
 	// layerLandslide.addTo(map);
@@ -217,16 +185,12 @@ var layerWater = omnivore.csv('pntsWater.csv', null, pntsWater);
 	// layerRoad.addTo(map);
 	// layerStormHail.addTo(map);
 	// layerWater.addTo(map);
-
-	
-	
-	//map.addLayer(layerFlood);
 	
 
     //Clustering testing
-	var markers = new L.MarkerClusterGroup();
-	markers.addLayer(layerFlood);
-	map.addLayer(markers);
+	//markers = new L.MarkerClusterGroup();
+	//markers.addLayer(layerFlood);
+	map.addLayer(clusterAir);
 	
 	
 	
@@ -287,17 +251,19 @@ var layerWater = omnivore.csv('pntsWater.csv', null, pntsWater);
 
 
 function onEachFeature(feature, layer) {
-    layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        click: function (e) {
-            if (currTarget) {
-                resetHighlight(currTarget); //reset previously clicked postcode
-            }
-            currTarget = e;
-            highlightFeature(e);
-        }
-    });
+	//markers.addLayer(layer);
+
+    // layer.on({
+        // mouseover: highlightFeature,
+        // mouseout: resetHighlight,
+        // click: function (e) {
+            // if (currTarget) {
+                // resetHighlight(currTarget); //reset previously clicked postcode
+            // }
+            // currTarget = e;
+            // highlightFeature(e);
+        // }
+    // });
 }
 
 
