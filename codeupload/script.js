@@ -110,9 +110,20 @@ function init() {
     //Initialize the map on the "map" div
     map = new L.Map('map');
 
-    map.on('zoomend', function() {
-        var currentZoom = map.getZoom();
-        $('#map').attr('data-zoom', currentZoom);
+    $('#map').attr('data-zoom', startZoom);
+    map.on('zoomstart', function(event) {
+        setTimeout(function() {
+            if (typeof event.target._animateToZoom != undefined) {
+                $('#map').attr('data-zoom', event.target._animateToZoom);
+            } else {
+                $('#map').attr('data-zoom', map.getZoom());
+            }
+        }, 0);
+    });
+    map.on('zoomend', function(event) {
+        setTimeout(function() {
+            $('#map').attr('data-zoom', map.getZoom());
+        }, 0);
     });
 
     //Control that shows state info on hover
@@ -440,6 +451,10 @@ $(function() {
             $(this).parent().addClass('checked');
         } else {
             $(this).parent().removeClass('checked');
+        }
+        if ($('#map_filter .checked [level=child]').length == 0) {
+            $('#map_filter [level=all]').prop('checked',false);
+            $('#map_filter [level=all]').parent().removeClass('checked');
         }
    });
     $('#map_filter [level=all]').change(function() {

@@ -2,6 +2,8 @@ html,body { padding: 0; margin: 0; font-size: 100%; }
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 .leaflet-left { left: 200px; }
+.leaflet-control.info { display: none; }
+
 .map_filter { position: absolute; top: 0; left: 0; width: 200px; background: #fff; font-family: Arial; }
 .map_filter h1 { margin: 0; padding: 0; background: #333 url(../images/projectdoom.png) no-repeat 50% 50%; height: 50px; text-indent: -9999px; }
 .map_filter ul { padding: 0; margin: 0; list-style-type: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none; user-select: none; }
@@ -38,6 +40,9 @@ html,body { padding: 0; margin: 0; font-size: 100%; }
 .map_filter label[data-type=manmade_fire]:after { background-image: url(../images/icon_manmade_fire.png); }
 .map_filter label[data-type=manmade_industrial]:after { background-image: url(../images/icon_manmade_industrial.png); }
 
+.map_filter .more { position: absolute; height: 30px; bottom: -40px; left: 0; right: 0; text-align: center; font-size: 0.8em;  }
+.map_filter .more a { color: #fff; text-decoration: underline;  padding: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+
 .marker_popup { display: none; }
 
 .leaflet-popup { margin: 0 0 10px 0;}
@@ -66,8 +71,8 @@ html,body { padding: 0; margin: 0; font-size: 100%; }
 /*.icon_manmade_fire { display: block; width: 32px !important; height: 32px !important; margin: -16px 0 0 -16px !important; background: url(../images/icon_manmade_fire.png) no-repeat 50% 50%; background-size: 100% 100%; }*/
 .leaflet-marker-icon { display: block; width: 3em !important; height: 3em !important; margin: -1.5em 0 0 -1.5em !important; }
 .leaflet-marker-icon img { width: 100%; }
-.leaflet-marker-icon h3 { position: absolute; bottom: 3em; left: 50%; width: 15em; margin: 0 0 0 -7.5em; text-align: center; pointer-events: none; display: none; line-height: 1.2; opacity: 0.8; }
-.leaflet-marker-icon .death { position: absolute; top: 3em;left: 50%; width: 15em; margin: 0 0 0 -7.5em; text-align: center; pointer-events: none; display: none; opacity: 0.8; }
+.leaflet-marker-icon h3 { position: absolute; bottom: 3em; left: 50%; width: 15em; margin: 0 0 0 -7.5em; text-align: center; pointer-events: none; display: none; line-height: 1.2; opacity: 0.8; text-shadow: -1px -1px 0 #fff,  1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
+.leaflet-marker-icon .death { position: absolute; top: 3em;left: 50%; width: 15em; margin: 0 0 0 -7.5em; text-align: center; pointer-events: none; display: none; opacity: 0.8; text-shadow: -1px -1px 0 #fff,  1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
 /*
 .leaflet-marker-icon.icon_transport h3, .leaflet-marker-icon.icon_transport .death { color: #fda128; }
 .leaflet-marker-icon.icon_natural h3, .leaflet-marker-icon.icon_natural .death { color: #18a762; }
